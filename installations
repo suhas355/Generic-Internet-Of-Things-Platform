@@ -1,0 +1,4 @@
+sudo npm install
+sudo npm install xml2js
+sudo npm install mongodb
+-- changes to index.js ---> bson

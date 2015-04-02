@@ -1,4 +1,6 @@
 var express = require('express');
+var db = require("./dbconnection.js");
+db.readXMLFile();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -11,6 +13,12 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
+
+
+app.get('/getSensors', function (req, res) {
+  db.getSensorList("1", res);
+});
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -57,4 +65,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+app.listen(3000);

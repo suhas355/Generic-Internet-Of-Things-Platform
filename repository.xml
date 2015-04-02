@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Gateways>
+<Gateway>
+	<HWID>1</HWID>
+	<Location>10,20</Location>
+	<LocationName>Pg1Labs</LocationName>
+	<Sensor>
+		<ID>1</ID>
+		<Type>temperature</Type>
+		<SensorLocation>10,20</SensorLocation>
+		<SensorLocationName>PG1Labs</SensorLocationName>
+	</Sensor>
+	<Sensor>
+		<ID>2</ID>
+		<Type>Sound</Type>
+		<SensorLocation>10,20</SensorLocation>
+		<SensorLocationName>Pg1Labs</SensorLocationName>
+	</Sensor>
+</Gateway>
+<Gateway>
+	<HWID>2</HWID>
+	<Location>10,20</Location>
+	<LocationName>Pg1Labs</LocationName>
+	<Sensor>
+		<ID>1</ID>
+		<Type>temperature</Type>
+		<SensorLocation>10,20</SensorLocation>
+		<SensorLocationName>PG1Labs</SensorLocationName>
+	</Sensor>
+	<Sensor>
+		<ID>2</ID>
+		<Type>Sound</Type>
+		<SensorLocation>10,20</SensorLocation>
+		<SensorLocationName>Pg1Labs</SensorLocationName>
+	</Sensor>
+</Gateway>
+</Gateways>
