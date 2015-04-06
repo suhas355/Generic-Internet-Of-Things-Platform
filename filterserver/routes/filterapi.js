@@ -1,6 +1,6 @@
 var exports = module.exports = {};
 
-var filterapi = require('../models/apis');
+var filterapi = require('../models/dbschema');
 var express = require('express');
 var router = express.Router();
 
