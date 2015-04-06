@@ -1,5 +1,7 @@
+var exports = module.exports = {};
 var PORT = 33333;
 var HOST = '127.0.0.1';
+var db = require("./dbconnection.js");
 
 var dgram = require('dgram');
 var message = new Buffer('ping');
@@ -21,12 +23,14 @@ client.on('message', function (message, remote) {
 	//client.close(); 
 }); 
 
-function pingFilterServer(){
+exports.pingFilterServer = function(){
 	if(properFilter==false){
 		console.log("filter server dead");
+		db.insertFSPingStatus("filter","inactive");
 
 	}else{
 		console.log("filter server ok");
+		db.insertFSPingStatus("filter","active");
 	}
 	properFilter = false;
 	client.send(message, 0, message.length, PORT, HOST, function(err, bytes) { 
@@ -36,9 +40,8 @@ function pingFilterServer(){
 	});
 }
 
-setInterval(pingFilterServer,10000);
 
-function pingGateway(){
+exports.pingGateway = function(){
 	console.log("bla");
 }
 

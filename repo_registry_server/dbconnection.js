@@ -28,6 +28,19 @@ exports.getSensorList = function(gatewayId, res) {
 		});
 	});
 
+};
+
+exports.insertInitialVals = function() {
+	MongoClient.connect("mongodb://localhost:27017/sensor", function(err, db) {
+		console.log('Inserting initial vals');
+		var collection = db.collection('pingstatus');
+		collection.remove({});
+		var jsonObj = {};//'{filter:inactive}';//"{"+server.toString() +":"+ status.toString() +"}";
+		jsonObj['device'] = 'filter'
+		jsonObj['status'] = 'inactive';
+		collection.insert(jsonObj);
+		db.close();
+	});
 }
 
 
@@ -40,10 +53,10 @@ exports.readXMLFile = function() {
 	var xml = data;
 	var obj;
 	parseString(xml, function (err, result) {
-	json = JSON.stringify(result);
-	obj = JSON.parse(json);
+		json = JSON.stringify(result);
+		obj = JSON.parse(json);
 	});
-	var MongoClient = require('mongodb').MongoClient;
+
 	MongoClient.connect("mongodb://localhost:27017/sensor", function(err, db) {
 
 		db.collection('test', function(err, collection) {
@@ -54,3 +67,27 @@ exports.readXMLFile = function() {
 		db.close();
 	});
 };
+
+exports.insertFSPingStatus = function(server,status) {
+	MongoClient.connect("mongodb://localhost:27017/sensor", function(err, db) {
+
+		var collection = db.collection('pingstatus');
+		var jsonObj = {};//'{filter:inactive}';//"{"+server.toString() +":"+ status.toString() +"}";
+		jsonObj['device'] = server.toString();
+		jsonObj['status'] = status.toString();
+		//collection.insert(jsonObj);
+
+		collection.update(
+			{'device':'filter'},
+				{
+					$set:
+					{
+						'status':status.toString()
+					}
+				}
+			);
+		db.close();
+	});
+};
+
+
