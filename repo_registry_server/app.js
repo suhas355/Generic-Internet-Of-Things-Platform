@@ -1,11 +1,10 @@
 var express = require('express');
 var db = require("./dbconnection.js");
 db.readXMLFile();
-db.insertInitialVals();
 
 var repo_reg = require("./registrysocket.js");
 setInterval(repo_reg.pingFilterServer,3000);
-
+setInterval(repo_reg.pingFilterServer.pingGateway, 3000);
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -21,7 +20,8 @@ var app = express();
 
 
 app.get('/getSensors', function (req, res) {
-  db.getSensorList("1", res);
+	var id = req.query.hwid;
+  db.getSensorList(id, res);
 });
 
 app.set('views', path.join(__dirname, 'views'));
