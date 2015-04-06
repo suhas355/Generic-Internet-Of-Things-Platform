@@ -46,9 +46,10 @@ exports.pingGateway = function(){
 	var gatewayList = db.gatewayList;
 	var len = gatewayList.length;
 	console.log("Sending ping message to gateway ");
-	client.send(message, 0, message.length, PORT, "IP_ADDress of gateway", function(err, bytes) { 
-		if (err) 
-			throw err; 
+	//Change IP address to gateways ip address
+	client.send(message, 0, message.length, PORT, "127.0.0.1", function(err, bytes) { 
+		/*if (err) 
+			throw err; */
 		console.log('Test ping ' + HOST +':'+ PORT); 
 	});
 }
