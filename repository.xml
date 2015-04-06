@@ -22,7 +22,7 @@
 </Gateway>
 <Gateway>
 	<HWID>2</HWID>
-	<MacAddress>84:51:81:2C:8C:03</MacAddress>
+	<MacAddress>84:51:BF:2C:8C:03</MacAddress>
 	<Location>10,20</Location>
 	<LocationName>Pg1Labs</LocationName>
 	<Sensor>
