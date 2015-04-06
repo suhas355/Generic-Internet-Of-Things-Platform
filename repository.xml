@@ -7,12 +7,14 @@
 	<Sensor>
 		<ID>1</ID>
 		<Type>temperature</Type>
+		<SensorDevice>helloworld</SensorDevice>
 		<SensorLocation>10,20</SensorLocation>
 		<SensorLocationName>PG1Labs</SensorLocationName>
 	</Sensor>
 	<Sensor>
 		<ID>2</ID>
 		<Type>Sound</Type>
+		<SensorDevice>helloworld</SensorDevice>
 		<SensorLocation>10,20</SensorLocation>
 		<SensorLocationName>Pg1Labs</SensorLocationName>
 	</Sensor>
@@ -24,12 +26,14 @@
 	<Sensor>
 		<ID>1</ID>
 		<Type>temperature</Type>
+		<SensorDevice>dharakk</SensorDevice>
 		<SensorLocation>10,20</SensorLocation>
 		<SensorLocationName>PG1Labs</SensorLocationName>
 	</Sensor>
 	<Sensor>
 		<ID>2</ID>
 		<Type>Sound</Type>
+		<SensorDevice>dharakk</SensorDevice>
 		<SensorLocation>10,20</SensorLocation>
 		<SensorLocationName>Pg1Labs</SensorLocationName>
 	</Sensor>
