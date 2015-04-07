@@ -13,7 +13,7 @@ var sensorInfoSchema = new Schema({
   	protocol: String
     });
 
-module.exports = mongoose.model('sensorinfo', sensorInfoSchema);
+var sensorinfo = mongoose.model('sensorinfo', sensorInfoSchema);
 
 var gatewayInfoSchema = new Schema({
 	gatewayId: String,
@@ -23,4 +23,9 @@ var gatewayInfoSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('gatewayinfo', gatewayInfoSchema);
+var gatewayinfo = mongoose.model('gatewayinfo', gatewayInfoSchema);
+
+module.exports = {
+  sensorinfo : sensorinfo,
+  gatewayinfo : gatewayinfo
+};
