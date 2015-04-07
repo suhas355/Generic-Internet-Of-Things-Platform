@@ -11,4 +11,4 @@ var sensorDataSchema = new Schema({
   timestamp: { type : Date, default: Date.now }
 });
  
-module.exports = mongoose.model('filterapi', sensorDataSchema);
+module.exports = mongoose.model('filterapi', sensorDataSchema); 
