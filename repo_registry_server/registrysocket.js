@@ -1,7 +1,13 @@
 var exports = module.exports = {};
 var PORT = 33333;
 var HOST = '127.0.0.1';
-var db = require("./dbconnection.js");
+var mongoose = require('mongoose');
+var db = require("./dbcon");
+
+var dbName = 'sensor';
+var connectionString = 'mongodb://localhost:27017/' + dbName;
+ 
+mongoose.connect(connectionString);
 
 var dgram = require('dgram');
 var message = new Buffer('ping');
@@ -20,7 +26,6 @@ client.on('message', function (message, remote) {
 		properFilter=true;
 	}
 
-	//client.close(); 
 }); 
 
 exports.pingFilterServer = function(){
@@ -81,4 +86,3 @@ server_2.on('message',function (message, remote){
 server_2.bind(SERVER_PORT,SERVER_HOST);
  
 
-//setInterval(bla,1000);

@@ -1,9 +1,10 @@
 var express = require('express');
-var db = require("./dbconnection.js");
+var db = require("./dbcon");
 db.readXMLFile();
 
 
 var repo_reg = require("./registrysocket.js");
+
 setInterval(repo_reg.pingFilterServer,3000);
 setInterval(repo_reg.pingGateway, 3000);
 var path = require('path');
@@ -20,13 +21,15 @@ var users = require('./routes/users');
 var mongoose = require('mongoose');
 var dbinfo = require('./routes/sensorinfo'); 
 
+var devicedb = require('./routes/dbconnection');
+
 
 var app = express();
 
-var dbName = 'sensordata';
-var connectionString = 'mongodb://localhost:27017/' + dbName;
+var dbName = 'sensor';
+//var connectionString = 'mongodb://localhost:27017/' + dbName;
  
-mongoose.connect(connectionString);
+//mongoose.connect(connectionString);
 
 
 
@@ -34,7 +37,7 @@ mongoose.connect(connectionString);
 
 
 app.get('/getSensors', function (req, res) {
-	var id = req.query.hwid;
+	var id = req.query.mac;
   db.getSensorList(id, res);
 });
 

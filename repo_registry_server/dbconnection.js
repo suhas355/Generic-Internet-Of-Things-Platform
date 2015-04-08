@@ -1,61 +1,38 @@
 var exports = module.exports = {};
 
+var devicedb = require('./model/dbschema');
+
 var gatewayList = [];
-var MongoClient = require('mongodb').MongoClient;
 
-exports.getSensorList = function(gatewayId, callback) {
-
-	MongoClient.connect("mongodb://localhost:27017/sensor", function(err, db) {
-
-		db.collection('test', function(err, collection){
-
-		});
-		var collection = db.collection('test');
-
-		collection.find().toArray(function(err, items) {
-
-			
-			var sensorArr = items[0].Gateways.Gateway;
-			var len = sensorArr.length;
-			//console.log(sensorArr);
-			for(var i=0; i<len; i++){
-
-				if(sensorArr[i].HWID == (gatewayId)){
-					
-					callback(sensorArr[i]);
-				}
-			}
-			//res.send("Gateway Id not found!!");
-		});
+exports.clearDb = function(){ 
+	devicedb.sensorinfo.remove({},function(err){
+		if(err){
+			console.log('Error: '+err);
+		}else{
+			console.log('Removed sensorinfo');
+		}
 	});
 
-};
-
-exports.insertInitialVals = function(ids) {
-	MongoClient.connect("mongodb://localhost:27017/sensor", function(err, db) {
-		console.log('Inserting initial vals');
-		var collection = db.collection('pingstatus');
-		collection.remove({});
-		var jsonObj = {};//'{filter:inactive}';//"{"+server.toString() +":"+ status.toString() +"}";
-		jsonObj['device'] = 'filter'
-		jsonObj['status'] = 'inactive';
-		collection.insert(jsonObj);
-		var len = ids.length;
-		for(var i=0; i<len; i++){
-
-			var jsonObj = {};
-			jsonObj['device'] = ids[i][0];
-			jsonObj['status'] = 'inactive';
-			collection.insert(jsonObj);
+	devicedb.gatewayinfo.remove({},function(err){
+		if(err){
+			console.log('Error: '+err);
+		}else{
+			console.log('Removed gatewayinfo');
 		}
-		db.close();
+	});
+
+	devicedb.pingstatus.remove({},function(err,status){
+		if(err){
+			console.log('Error in removing entries..');
+		}else{
+			console.log('Successfully cleared table...');
+		}
 	});
 }
 
-
 exports.readXMLFile = function() {
-
-	var hwids = [];
+	exports.clearDb();
+	exports.insertInitialVals('filter');
 	var fs = require('fs');
 	var data = fs.readFileSync('../repository.xml','utf8');
 
@@ -67,54 +44,131 @@ exports.readXMLFile = function() {
 		obj = JSON.parse(json);
 	});
 
-	MongoClient.connect("mongodb://localhost:27017/sensorData", function(err, db) {
+	var gatewayArr = obj['Gateways']['Gateway'];
+	var len = gatewayArr.length;
+	for(var i=0; i<len; i++){
 
-		db.collection('test', function(err, collection) {
-			collection.remove();
-		});
-		var collection = db.collection('gateways');
-		collection.insert(obj);
-		//console.log(obj["Gateways"]["Gateway"][0]["HWID"]);
-		var gatewayArr = obj["Gateways"]["Gateway"];
-		var len = gatewayArr.length;
-		for(var i=0; i<len; i++){
-			var id = gatewayArr[i]["HWID"];
-			hwids.push(id);
-			gatewayList.push(id);
-			var sensorArr = gatewayArr[i]["Sensor"];
+		/************** Gateway data **************/
+		var geoloc =  gatewayArr[i]['GeoLocation'];
+		var latitude = geoloc[0]['Latitude'];
+		var longitude =  geoloc[0]['Longitude'];
 
-			for(var j=0; j<sensorArr.length; j++){
+		var jsonObj = {};
+		var mac = gatewayArr[i]['MacAddress']
+		gatewayList.push(mac);
+		exports.insertInitialVals('G'+mac);
+		jsonObj['macAddress'] = mac;
+		jsonObj['location'] = gatewayArr[i]['LocationName'];
+		var latjson = {};
+		latjson['latitude'] = latitude.toString();
+		var longjson = {};
+		longjson['longitude'] = longitude.toString();
+		jsonObj['geolocation'] = [ latjson , longjson];
 
-				var idSensor = sensorArr[j]["ID"];
-				hwids.push(idSensor);
-			}
+
+		var gatewayData = new devicedb.gatewayinfo(jsonObj);
+
+		gatewayData.save(function(err) {
+		    if (err) {
+		     	console.log('Error in gatewayData insertion');
+		    }else{	 
+	    		console.log('Data Inserted to gateway info')
+	    	}
+	  	});
+
+
+	  	/***************Sensor data **************/
+	  	var sensorArr = gatewayArr[i]["Sensor"];
+	  	var slen = sensorArr.length;
+
+	  	var sensorJson = {};
+	  	for(var j=0; j<len; j++){
+	  		exports.insertInitialVals('S'+sensorArr[j]['ID']);
+	  		sensorJson['sensorId'] = sensorArr[j]['ID'];
+	  		sensorJson['gatewayId'] = mac;
+	  		sensorJson['deviceName'] = sensorArr[j]['SensorDevice'];
+	  		sensorJson['type'] = sensorArr[j]['Type'];
+	  		sensorJson['unit'] = sensorArr[j]['Unit'];
+	  		sensorJson['location'] = sensorArr[j]['SensorLocationName'];
+	  		var slat = {};
+	  		slat['latitude'] = sensorArr[j]['SensorGeoLocation'][0]['Latitude'].toString();
+	  		var slong = {};
+	  		slong['longitude'] = sensorArr[j]['SensorGeoLocation'][0]['Longitude'].toString();
+	  		sensorJson['geolocation'] = [ slat,slong];
+	  		sensorJson['protocol'] = sensorArr[j]['Protocol'];
+	  	//	sensorData['pullfrequency'] = ;
+
+	  		var sensorData = new devicedb.sensorinfo(sensorJson);
+
+			sensorData.save(function(err) {
+			    if (err) {
+			      console.log('Error in sensor data insertion ' + err)
+			    }
+	 			else
+	 			{
+	    			console.log('Data Inserted to sensor info')
+	    		}
+	  		});
+
+
+ 	  	}
+	}
+}
+
+exports.insertInitialVals = function(device) {
+	console.log('Inserting initial vals for ---' + device);
+	
+	var jsonObj = {};
+	jsonObj['device'] = device;
+	jsonObj['status'] = 'inactive';
+	var statusdata = new devicedb.pingstatus(jsonObj);
+	statusdata.save(function(err){
+		if(err){
+			console.log('Error in putting initial status');
+		}else{
+			console.log('Successfully inserted initial value');
 		}
-		exports.insertInitialVals(hwids);
-		db.close();
 	});
-};
+}
 
 exports.insertFSPingStatus = function(server,status) {
-	MongoClient.connect("mongodb://localhost:27017/sensor", function(err, db) {
+	console.log('insertFSPingStatus ' + server + '---' + status);
+	var jsonObj = {};
 
-		var collection = db.collection('pingstatus');
-		var jsonObj = {};//'{filter:inactive}';//"{"+server.toString() +":"+ status.toString() +"}";
-		jsonObj['device'] = server.toString();
-		jsonObj['status'] = status.toString();
-		//collection.insert(jsonObj);
+	devicedb.pingstatus.findOne(
+		{'device':server}
+		,function(err,ser){
+			if(err){
+				console.log('Error in finding entry for ' + server);
+			}else{
+				console.log('Found entry ');
 
-		collection.update(
-			{'device':'filter'},
-				{
-					$set:
-					{
-						'status':status.toString()
+				ser['status'] = status;
+				console.log(ser['status']);
+				//var statusdata = new devicedb.pingstatus(jsonObj);
+				ser.save(function(err){
+					if(err){
+						console.log('Error in inserting status');
+					}else{
+						console.log('Updated status '  + server);
 					}
-				}
-			);
-		db.close();
+				});
+			}
+		}
+	);
+}
+
+exports.getSensorList = function(gatewayId, callback) {
+
+	devicedb.sensorinfo.find({'gatewayId':gatewayId},
+		function(err,sinfo){
+			if(err){
+				console.log('Error in getting sensor info for gateway ' +gatewayId)
+				console.log(err)
+			}else{
+				callback(sinfo);
+			}
 	});
-};
+}
 
 exports.gatewayList = gatewayList;
-
