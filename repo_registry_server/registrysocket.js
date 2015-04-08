@@ -2,7 +2,7 @@ var exports = module.exports = {};
 var PORT = 33333;
 var HOST = '127.0.0.1';
 var mongoose = require('mongoose');
-var db = require("./dbcon");
+var db = require("./dbconnection");
 
 var dbName = 'sensor';
 var connectionString = 'mongodb://localhost:27017/' + dbName;

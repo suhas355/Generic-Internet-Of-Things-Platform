@@ -1,5 +1,5 @@
 var express = require('express');
-var db = require("./dbcon");
+var db = require("./dbconnection");
 db.readXMLFile();
 
 
@@ -21,17 +21,7 @@ var users = require('./routes/users');
 var mongoose = require('mongoose');
 var dbinfo = require('./routes/sensorinfo'); 
 
-var devicedb = require('./routes/dbconnection');
-
-
 var app = express();
-
-var dbName = 'sensor';
-//var connectionString = 'mongodb://localhost:27017/' + dbName;
- 
-//mongoose.connect(connectionString);
-
-
 
 // view engine setup
 
