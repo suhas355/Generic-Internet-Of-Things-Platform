@@ -12,6 +12,7 @@ mongoose.connect(connectionString);
 var dgram = require('dgram');
 var message = new Buffer('ping');
 var properFilter = false;
+var gatewayStatus = {};
 var client = dgram.createSocket('udp4'); 
 
 client.on('listening', function () { 
@@ -22,8 +23,31 @@ client.on('listening', function () {
 client.on('message', function (message, remote) {
 
 	console.log(remote.address + ':' + remote.port +' - ' + message); 
+
 	if( message == "ok"){
 		properFilter=true;
+	} 
+	else {
+
+		var obj = JSON.parse(message.toString());
+		console.log(obj);
+		var gatewayId = obj["mac"];
+		for(var key in obj) {
+ 		   value = obj[key];
+ 		   if(key!="gid" && key!="mac"){
+	 		   if(value == "0"){
+	 		   		insertFSPingStatus(key, "inactive");
+	 		   } else{
+	 		   		insertFSPingStatus(key, "active");
+	 		   }
+ 			}
+
+ 			else if(key == "mac"){
+
+ 				insertFSPingStatus(obj[key], "active");
+ 				gatewayStatus[obj[key]] = 'active';
+ 			}
+		}
 	}
 
 }); 
@@ -48,8 +72,11 @@ exports.pingFilterServer = function(){
 
 exports.pingGateway = function(){
 	
-	var gatewayList = db.gatewayList;
-	var len = gatewayList.length;
+	if(gatewayStatus[db.gatewayList[0]] == 'inactive'){
+		db.insertFSPingStatus('G'+db.gatewayList[0], "inactive");
+		//TODO: change the status of sensors also to inactive
+	}
+	gatewayStatus[db.gatewayList[0]] = "inactive";
 	console.log("Sending ping message to gateway ");
 	//Change IP address to gateways ip address
 	client.send(message, 0, message.length, PORT, "127.0.0.1", function(err, bytes) { 
@@ -57,6 +84,8 @@ exports.pingGateway = function(){
 			throw err; */
 		console.log('Test ping ' + HOST +':'+ PORT); 
 	});
+
+	;
 }
 
 var SERVER_PORT = 30001;
