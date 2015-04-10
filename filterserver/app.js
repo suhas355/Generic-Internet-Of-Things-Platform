@@ -5,7 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var filtersocket = require('./filtersocket');
-
+var processQuery = require('./validate');
+setInterval(processQuery.executeQueries, 5000);
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -35,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/sensor',filterapi);
+app.use('/getdata',filterapi.router);
 app.use('/', routes);
 app.use('/users', users);
 

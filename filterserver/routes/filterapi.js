@@ -1,23 +1,47 @@
 var exports = module.exports = {};
-
+var queryMapping = {};
+var callbackId =0;
 var filterapi = require('../models/dbschema');
 var express = require('express');
 var router = express.Router();
-
-router.route('/getdata').get(function(req, res) {
+var Validate = require('../validate.js');
+router.route('/').get(function(req, res) {
 	console.log(req.query);
   filterapi.find(
   	{sensorId : req.query.sensorId},
   	function(err, sensordata) {
     if (err) {
-      return res.send("error in request");
+      return res.send("error in request "+err);
     }
  
     res.json(sensordata);
   });
 });
 
-router.route('/getdata/geolocation').post(function(req, res) {
+router.route('/registercallback/sensors').post(function(req, res) {
+  console.log(req.body);
+  //TODO: Validate
+  callbackId++;
+  var query = Validate.getQuery(req.body);
+  var ipAddr = req.headers["x-forwarded-for"]; 
+  if (ipAddr){ 
+    var list = ipAddr.split(","); 
+    ipAddr = list[list.length-1]; 
+  } 
+  else { 
+    ipAddr = req.connection.remoteAddress; 
+  }
+  queryMapping[callbackId] = {"query":query, "IP":ipAddr};
+  var ret = {};
+  ret['message'] = "Callback registered";
+  ret['id'] = callbackId;
+  res.json(ret);
+  //1.counter
+  //2.validation
+  //3. generate query object
+});
+
+router.route('/geolocation').post(function(req, res) {
   console.log(req.body.latitude);
   console.log(req.body.longitude);
   if(req.body.radius == undefined){
@@ -46,7 +70,7 @@ router.route('/getdata/geolocation').post(function(req, res) {
 
 
 
-router.route('/getdata/location').post(function(req, res) {
+router.route('/location').post(function(req, res) {
   console.log(req.body.location);
   if(req.body.location == undefined){
     res.status(422).send({error:"Missing mandatory fields in JSON"});
@@ -91,4 +115,5 @@ router.route('/sensordata').post(function(req, res) {
   });
 });
 
-module.exports = router;
+exports.router = router;
+exports.queryMapping = queryMapping;
