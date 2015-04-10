@@ -136,7 +136,7 @@ exports.insertFSPingStatus = function(server,status) {
 	var jsonObj = {};
 
 	devicedb.pingstatus.findOne(
-		{'device':server}
+		{'device':server.toString()}
 		,function(err,ser){
 			if(err){
 				console.log('Error in finding entry for ' + server);
@@ -144,7 +144,7 @@ exports.insertFSPingStatus = function(server,status) {
 				console.log('Found entry ');
 
 				ser['status'] = status;
-				console.log(ser['status']);
+				console.log(ser['de']);
 				//var statusdata = new devicedb.pingstatus(jsonObj);
 				ser.save(function(err){
 					if(err){
