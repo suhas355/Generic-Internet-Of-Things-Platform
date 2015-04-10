@@ -1,6 +1,8 @@
 var exports = module.exports = {};
 var filterapi = require('./models/dbschema');
 var router = require('./routes/filterapi');
+var io = require('socket.io-client');
+var socketPort = "3550";
 var getQuery = function(object){
 
 	var query = filterapi.find();
@@ -68,6 +70,20 @@ var sendResponse = function(key, sensordata, ipaddress){
 	//1. Create socket
 	var queryMapping = router.queryMapping;
 	delete queryMapping[key];
+	var index = ipaddress.lastIndexOf(":");
+	var url = "";
+	if(index!=-1){
+		url = ipaddress.substring(index+1);
+	} else {
+		url = ipaddress;
+	}
+	
+	url = "http://"+url + ":" + socketPort;
+	var socket = io.connect(url);
+	console.log("URL:" + url);
+	var response = {};
+	response[key] = sensordata;
+	socket.emit('Callback Response', response);
 
 	//console.log(queryMapping.)
 }

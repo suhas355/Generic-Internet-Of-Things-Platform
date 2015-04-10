@@ -4,7 +4,7 @@ var callbackId =0;
 var filterapi = require('../models/dbschema');
 var express = require('express');
 var router = express.Router();
-var Validate = require('../validate.js');
+var Validate = require('../processcb.js');
 router.route('/').get(function(req, res) {
 	console.log(req.query);
   filterapi.find(

@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var filtersocket = require('./filtersocket');
-var processQuery = require('./validate');
+var processQuery = require('./processcb');
 setInterval(processQuery.executeQueries, 5000);
 var routes = require('./routes/index');
 var users = require('./routes/users');
