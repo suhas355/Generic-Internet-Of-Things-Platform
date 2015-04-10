@@ -162,6 +162,7 @@ exports.getSensorList = function(gatewayId, callback) {
 
 	devicedb.sensorinfo.find({'gatewayId':gatewayId},
 		function(err,sinfo){
+			console.log(sinfo);
 			if(err){
 				console.log('Error in getting sensor info for gateway ' +gatewayId)
 				console.log(err)
