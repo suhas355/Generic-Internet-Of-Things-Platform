@@ -3,8 +3,6 @@ var express = require('express');
 var db = require("./dbconnect");
 
 
-setInterval(db.insertsensordata,3000);
-
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -20,6 +18,9 @@ var mongoose = require('mongoose');
 var filterapi = require('./routes/filterapi'); 
 
 var app = express();
+
+
+setInterval(filtersocket.getgatewaydata,3000);
 
 //Connect to mongoose
 
