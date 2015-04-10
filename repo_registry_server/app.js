@@ -27,8 +27,9 @@ var app = express();
 
 
 app.get('/getSensors', function (req, res) {
-	var id = req.query.mac;
-  db.getSensorList(id, res);
+	// /var id = req.query.mac;
+  db.getSensorList("84:51:81:2C:8C:04");
+
 });
 
 app.set('views', path.join(__dirname, 'views'));

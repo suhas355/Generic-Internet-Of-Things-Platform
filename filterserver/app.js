@@ -1,4 +1,8 @@
 var express = require('express');
+
+var db = require("./dbconnect");
+
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -15,13 +19,15 @@ var filterapi = require('./routes/filterapi');
 
 var app = express();
 
+
+setInterval(filtersocket.getgatewaydata,3000);
+
 //Connect to mongoose
 
 var dbName = 'sensordata';
 var connectionString = 'mongodb://localhost:27017/' + dbName;
  
-mongoose.connect(connectionString);
-
+//mongoose.connect(connectionString);
 
 
 // view engine setup
