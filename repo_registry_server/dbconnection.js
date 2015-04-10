@@ -44,6 +44,8 @@ exports.readXMLFile = function() {
 		obj = JSON.parse(json);
 	});
 
+	console.log(obj['Gateways']['Gateway']);
+
 	var gatewayArr = obj['Gateways']['Gateway'];
 	var len = gatewayArr.length;
 	for(var i=0; i<len; i++){

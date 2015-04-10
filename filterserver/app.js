@@ -1,4 +1,10 @@
 var express = require('express');
+
+var db = require("./dbconnect");
+
+
+setInterval(db.insertsensordata,3000);
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -19,8 +25,7 @@ var app = express();
 var dbName = 'sensordata';
 var connectionString = 'mongodb://localhost:27017/' + dbName;
  
-mongoose.connect(connectionString);
-
+//mongoose.connect(connectionString);
 
 
 // view engine setup
