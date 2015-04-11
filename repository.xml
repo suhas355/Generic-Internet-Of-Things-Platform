@@ -13,8 +13,8 @@
 			<Unit>celsius</Unit>
 			<SensorDevice>helloworld</SensorDevice>
 			<SensorGeoLocation>
-				<Latitude>10</Latitude>
-				<Longitude>20</Longitude>
+				<Latitude>10.2</Latitude>
+				<Longitude>20.4</Longitude>
 			</SensorGeoLocation>
 			<SensorLocationName>PG1Labs</SensorLocationName>
 			<Protocol>Bluetooth</Protocol>
@@ -25,8 +25,8 @@
 			<Unit>decibel</Unit>
 			<SensorDevice>helloworld</SensorDevice>
 			<SensorGeoLocation>
-				<Latitude>10</Latitude>
-				<Longitude>20</Longitude>
+				<Latitude>10.2</Latitude>
+				<Longitude>20.4</Longitude>
 			</SensorGeoLocation>
 			<SensorLocationName>Pg1Labs</SensorLocationName>
 			<Protocol>Bluetooth</Protocol>
@@ -43,10 +43,10 @@
 			<ID>1</ID>
 			<Type>temperature</Type>
 			<Unit>celsius</Unit>
-			<SensorDevice>dharakk</SensorDevice>
+			<SensorDevice>helloworld</SensorDevice>
 			<SensorGeoLocation>
-				<Latitude>10</Latitude>
-				<Longitude>20</Longitude>
+				<Latitude>10.2</Latitude>
+				<Longitude>20.4</Longitude>
 			</SensorGeoLocation>
 			<SensorLocationName>PG1Labs</SensorLocationName>
 			<Protocol>Bluetooth</Protocol>
@@ -55,10 +55,10 @@
 			<ID>2</ID>
 			<Type>Sound</Type>
 			<Unit>decibel</Unit>
-			<SensorDevice>dharakk</SensorDevice>
+			<SensorDevice>helloworld</SensorDevice>
 			<SensorGeoLocation>
-				<Latitude>10</Latitude>
-				<Longitude>20</Longitude>
+				<Latitude>10.2</Latitude>
+				<Longitude>20.4</Longitude>
 			</SensorGeoLocation>
 			<SensorLocationName>Pg1Labs</SensorLocationName>
 			<Protocol>Bluetooth</Protocol>

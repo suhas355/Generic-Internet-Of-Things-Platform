@@ -22,7 +22,7 @@ client.on('listening', function () {
 	
 client.on('message', function (message, remote) {
 
-	console.log(remote.address + ':' + remote.port +' - ' + message); 
+	console.log("Ping RESPONSE---" +remote.address + ':' + remote.port +' - ' + message); 
 
 	if( message == "ok"){
 		properFilter=true;
@@ -36,15 +36,15 @@ client.on('message', function (message, remote) {
  		   value = obj[key];
  		   if(key!="gid" && key!="mac"){
 	 		   if(value == "0"){
-	 		   		insertFSPingStatus(key, "inactive");
+	 		   		db.insertFSPingStatus("S"+key, "inactive");
 	 		   } else{
-	 		   		insertFSPingStatus(key, "active");
+	 		   		db.insertFSPingStatus("S"+key, "active");
 	 		   }
  			}
 
  			else if(key == "mac"){
 
- 				insertFSPingStatus(obj[key], "active");
+ 				db.insertFSPingStatus("G"+obj[key], "active");
  				gatewayStatus[obj[key]] = 'active';
  			}
 		}
@@ -65,7 +65,7 @@ exports.pingFilterServer = function(){
 	client.send(message, 0, message.length, PORT, HOST, function(err, bytes) { 
 	if (err) 
 		throw err; 
-	console.log('Test ping ' + HOST +':'+ PORT); 
+	console.log('Test filter ping ' + HOST +':'+ PORT); 
 	});
 }
 
@@ -79,17 +79,17 @@ exports.pingGateway = function(){
 	gatewayStatus[db.gatewayList[0]] = "inactive";
 	console.log("Sending ping message to gateway ");
 	//Change IP address to gateways ip address
-	client.send(message, 0, message.length, PORT, "127.0.0.1", function(err, bytes) { 
+	client.send(message, 0, message.length, PORT, "10.2.143.77", function(err, bytes) { 
 		/*if (err) 
 			throw err; */
-		console.log('Test ping ' + HOST +':'+ PORT); 
+		console.log('Test gateway ping ' + HOST +':'+ PORT); 
 	});
 
 	;
 }
 
 var SERVER_PORT = 30001;
-var SERVER_HOST = '127.0.0.1';
+var SERVER_HOST = '10.3.0.153';
 
 var server_2 = dgram.createSocket('udp4');
 
@@ -100,10 +100,10 @@ server_2.on('listening',function(){
 
 server_2.on('message',function (message, remote){
 	console.log(remote.address +":"+remote.port +" - " + message);
-	var msg = db.getSensorList(message, function(message){
+	var msg = db.getSensorList(message, function(data){
 		//console.log(message);
-		var msg = new Buffer(JSON.stringify(message));
-		//console.log(msg.toString());
+		var msg = new Buffer(JSON.stringify(data));
+		console.log("--------"+msg.toString());
 		server_2.send(msg,0,msg.length,remote.port,remote.address, function(err, bytes){
 		if(err)
 			throw err;
