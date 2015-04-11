@@ -1,5 +1,5 @@
 var PORT = 33333;
-var HOST = '127.0.0.1';
+var HOST = '10.3.0.153';
 
 
 var dgram = require('dgram');
@@ -30,7 +30,7 @@ server.bind(PORT,HOST);
 /*****************************Client Part***********************************/
 
 var CPORT = 33334;
-var CHOST = '127.0.0.1';
+var CHOST = '10.2.143.77';
 
 var mongoose = require('mongoose');
 var db = require("./dbconnect");
@@ -52,7 +52,7 @@ client.on('listening', function () {
 	
 client.on('message', function (message, remote) {
 
-	console.log("reply from gateway"+remote.address + ':' + remote.port +' - ' + message); 
+	console.log("data reply from gateway"+remote.address + ':' + remote.port +' - ' + message); 
 	//parse and dbstore
 
 	db.insertsensordata(message);
@@ -61,10 +61,10 @@ client.on('message', function (message, remote) {
 
 exports.getgatewaydata = function(){
 
-	client.send(message, 0, message.length, PORT, HOST, function(err, bytes) { 
+	client.send(message, 0, message.length, CPORT, CHOST, function(err, bytes) { 
 	if (err) 
 		throw err; 
-	console.log('Test ping ' + HOST +':'+ PORT); 
+	console.log('Get data from gateway ' + CHOST +':'+ CPORT); 
 	});
 }
 

@@ -5,7 +5,7 @@ var devicedb = require('./models/dbschema');
 
 exports.insertsensordata = function(data) {
 
-	var fs = require('fs');
+	/*var fs = require('fs');
 	var data = fs.readFileSync('./data.xml','utf8');
 
 	var parseString = require('xml2js').parseString;
@@ -15,9 +15,9 @@ exports.insertsensordata = function(data) {
 		json = JSON.stringify(result);
 		obj = JSON.parse(json);
 	});
-
-	console.log(obj['sensor']['sensordata']);
-
+*/
+	console.log(data);
+/*
 	var sensorArr = obj['sensor']['sensordata'];
 	var len = sensorArr.length;
 	for(var i=0; i<len; i++){
@@ -31,6 +31,6 @@ exports.insertsensordata = function(data) {
 		 	    console.log('data added'); 
 		    
 		});
-	}	
+	}	*/
 }
 
