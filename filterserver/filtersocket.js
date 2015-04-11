@@ -1,5 +1,5 @@
 var PORT = 33333;
-var HOST = '10.3.0.153';
+var HOST = 'localhost';
 
 
 var dgram = require('dgram');
@@ -64,7 +64,7 @@ exports.getgatewaydata = function(){
 	client.send(message, 0, message.length, CPORT, CHOST, function(err, bytes) { 
 	if (err) 
 		throw err; 
-	console.log('Get data from gateway ' + CHOST +':'+ CPORT); 
+	//console.log('Get data from gateway ' + CHOST +':'+ CPORT); 
 	});
 }
 

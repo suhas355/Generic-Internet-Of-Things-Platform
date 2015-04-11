@@ -24,7 +24,7 @@ setInterval(filtersocket.getgatewaydata,3000);
 
 //Connect to mongoose
 
-var dbName = 'sensordata';
+var dbName = 'sensor';
 var connectionString = 'mongodb://localhost:27017/' + dbName;
  
 //mongoose.connect(connectionString);

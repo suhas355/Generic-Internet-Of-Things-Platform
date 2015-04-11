@@ -16,7 +16,7 @@ exports.insertsensordata = function(data) {
 		obj = JSON.parse(json);
 	});
 */
-	console.log(data);
+	//console.log(data);
 /*
 	var sensorArr = obj['sensor']['sensordata'];
 	var len = sensorArr.length;

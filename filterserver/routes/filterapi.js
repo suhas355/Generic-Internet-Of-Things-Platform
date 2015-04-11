@@ -20,25 +20,32 @@ router.route('/').get(function(req, res) {
 
 router.route('/registercallback/sensors').post(function(req, res) {
   console.log(req.body);
-  //TODO: Validate
-  callbackId++;
-  var query = Validate.getQuery(req.body);
-  var ipAddr = req.headers["x-forwarded-for"]; 
-  if (ipAddr){ 
-    var list = ipAddr.split(","); 
-    ipAddr = list[list.length-1]; 
-  } 
-  else { 
-    ipAddr = req.connection.remoteAddress; 
-  }
-  queryMapping[callbackId] = {"query":query, "IP":ipAddr};
-  var ret = {};
-  ret['message'] = "Callback registered";
-  ret['id'] = callbackId;
-  res.json(ret);
-  //1.counter
-  //2.validation
-  //3. generate query object
+  
+  var reqQuery = req.body;
+
+  if(reqQuery['sensorId'] == undefined)
+  {
+    console.log("Invalid request ");
+    res.status(422).send({error:"Missing mandatory fields in JSON"});
+
+  }else{
+
+      callbackId++;
+      var query = Validate.getQuery(req.body);
+      var ipAddr = req.headers["x-forwarded-for"]; 
+      if (ipAddr){ 
+        var list = ipAddr.split(","); 
+        ipAddr = list[list.length-1]; 
+      } 
+      else { 
+        ipAddr = req.connection.remoteAddress; 
+      }
+      queryMapping[callbackId] = {"query":query, "IP":ipAddr};
+      var ret = {};
+      ret['message'] = "Callback registered";
+      ret['id'] = callbackId;
+      res.json(ret);
+    }
 });
 
 router.route('/geolocation').post(function(req, res) {
@@ -106,7 +113,7 @@ router.route('/sensordata').post(function(req, res) {
 	console.log(req.body);
   var sensordata = new filterapi(req.body);
  
-  sensordata.save(function(err) {
+  filterapi.update({sensorId:req.body.sensorId},req.body,{upsert:true},function(err) {
     if (err) {
       return res.send(err);
     }

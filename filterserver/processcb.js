@@ -18,7 +18,9 @@ var getQuery = function(object){
 		var min = parseFloat(object['minValue']);
 
 		var json = {};
-		json['data'] = {$lte : min};
+		var cond1 = {};
+		cond1['$lte'] = min;
+		json['data'] = cond1;
 		
 		conditionArr.push(json);
 	}
@@ -28,7 +30,9 @@ var getQuery = function(object){
 		var max = parseFloat(object['maxValue']);
 
 		var json = {};
-		json['data'] = {$gte : max};
+		var cond2 = {};
+		cond2['$gte'] = max;
+		json['data'] = cond2;
 		
 		conditionArr.push(json);
 	}
@@ -43,13 +47,14 @@ var getQuery = function(object){
 
 var executeQueries = function(){
 
-	console.log("Exx.. queries");
+	//console.log("Exx.. queries");
 
 	var queryMapping = router.queryMapping;
 	for(var key in queryMapping){
 
 		var query = queryMapping[key]["query"];
 		var ip = queryMapping[key]["IP"];
+		//console.log(query);
 		query.exec(function(err, sensordata){
 
 			if(err){
