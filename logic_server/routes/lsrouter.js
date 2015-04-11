@@ -17,4 +17,10 @@ router.route('/').post(function(req, res) {
 	
 });
 
+router.route('/getresults').get(function(req, res){
+
+	var callbackId = req.query.cid;
+	
+})
+
 exports.router = router;
