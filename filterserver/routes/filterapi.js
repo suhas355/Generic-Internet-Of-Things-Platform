@@ -41,6 +41,9 @@ router.route('/registercallback/sensors').post(function(req, res) {
         ipAddr = req.connection.remoteAddress; 
       }
       queryMapping[callbackId] = {"query":query, "IP":ipAddr};
+      if(req.body.tillWhen!=undefined){
+        queryMapping[callbackId]["time"] = req.body.tillWhen;
+      }
       var ret = {};
       ret['message'] = "Callback registered";
       ret['id'] = callbackId;
@@ -147,6 +150,9 @@ router.route('/registercallback/geolocation').post(function(req, res) {
         	ipAddr = req.connection.remoteAddress; 
       	}
       	queryMapping[callbackId] = {"query":query, "IP":ipAddr};
+        if(req.body.tillWhen!=undefined){
+          queryMapping[callbackId]["time"] = req.body.tillWhen;
+        }
       	var ret = {};
       	ret['message'] = "Callback registered";
       	ret['id'] = callbackId;

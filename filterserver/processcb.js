@@ -58,19 +58,28 @@ var executeQueries = function(){
 
 		var query = queryMapping[key]["query"];
 		var ip = queryMapping[key]["IP"];
-		//console.log(query);
-		query.exec(function(err, sensordata){
+		var time = queryMapping[key]["time"];
+		var currentTime = new Date()/1000;
 
-			if(err){
-				console.log(err);
-			} else{
-				if(sensordata.length == 0){
-					console.log("empty");
+		if(time < currentTime){
+
+			sendResponse(key,{"Message": "No data found for the request"}, ip);
+
+		} else {
+		//console.log(query);
+			query.exec(function(err, sensordata){
+
+				if(err){
+					console.log(err);
 				} else{
-					sendResponse(key,sensordata, ip);
+					if(sensordata.length == 0){
+						console.log("empty");
+					} else{
+						sendResponse(key,sensordata, ip);
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 }
 
