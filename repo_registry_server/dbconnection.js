@@ -8,24 +8,18 @@ exports.clearDb = function(){
 	devicedb.sensorinfo.remove({},function(err){
 		if(err){
 			console.log('Error: '+err);
-		}else{
-			console.log('Removed sensorinfo');
 		}
 	});
 
 	devicedb.gatewayinfo.remove({},function(err){
 		if(err){
 			console.log('Error: '+err);
-		}else{
-			console.log('Removed gatewayinfo');
 		}
 	});
 
 	devicedb.pingstatus.remove({},function(err,status){
 		if(err){
 			console.log('Error in removing entries..');
-		}else{
-			console.log('Successfully cleared table...');
 		}
 	});
 }
@@ -44,7 +38,6 @@ exports.readXMLFile = function() {
 		obj = JSON.parse(json);
 	});
 
-	console.log(obj['Gateways']['Gateway']);
 
 	var gatewayArr = obj['Gateways']['Gateway'];
 	var len = gatewayArr.length;
@@ -73,9 +66,7 @@ exports.readXMLFile = function() {
 		gatewayData.save(function(err) {
 		    if (err) {
 		     	console.log('Error in gatewayData insertion');
-		    }else{	 
-	    		console.log('Data Inserted to gateway info')
-	    	}
+		    }
 	  	});
 
 
@@ -106,10 +97,6 @@ exports.readXMLFile = function() {
 			    if (err) {
 			      console.log('Error in sensor data insertion ' + err)
 			    }
-	 			else
-	 			{
-	    			console.log('Data Inserted to sensor info')
-	    		}
 	  		});
 
 
@@ -118,7 +105,7 @@ exports.readXMLFile = function() {
 }
 
 exports.insertInitialVals = function(device) {
-	console.log('Inserting initial vals for ---' + device);
+	console.log('Inserting initial vals for ---' + device + "------");
 	
 	var jsonObj = {};
 	jsonObj['device'] = device;
@@ -126,33 +113,25 @@ exports.insertInitialVals = function(device) {
 	var statusdata = new devicedb.pingstatus(jsonObj);
 	statusdata.save(function(err){
 		if(err){
-			console.log('Error in putting initial status');
-		}else{
-			console.log('Successfully inserted initial value');
+			console.log('Error in putting initial status ' + device);
 		}
 	});
 }
 
 exports.insertFSPingStatus = function(server,status) {
-	console.log('insertFSPingStatus ' + server + '---' + status);
 	var jsonObj = {};
 
 	devicedb.pingstatus.findOne(
 		{'device':server.toString()}
-		,function(err,ser){
+		,function(err,device){
 			if(err){
 				console.log('Error in finding entry for ' + server);
 			}else{
-				console.log('Found entry ');
 
-				ser['status'] = status;
-				console.log(ser['de']);
-				//var statusdata = new devicedb.pingstatus(jsonObj);
-				ser.save(function(err){
+				device['status'] = status;
+				device.save(function(err){
 					if(err){
 						console.log('Error in inserting status');
-					}else{
-						console.log('Updated status '  + server);
 					}
 				});
 			}
