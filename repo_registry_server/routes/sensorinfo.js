@@ -28,7 +28,14 @@ router.route('/getsensors/location').post(function(req, res) {
 
 //get sensor id based on geo location
 
+router.route('/getsensors/geolocation').post(function(req,res){
+    console.log(req.body.location);
+    var lat = req.body.latitude;
+    var longi = req.body.longitude;
+    var radius = req.body.radius;
 
+    
+});
 
 //get sensor id based on type
 

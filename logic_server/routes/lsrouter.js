@@ -16,7 +16,7 @@ router.route('/').post(function(req, res) {
 	requestify.post('http://'+ip+':5000/getdata/registercallback/sensors', req.body)
 		.then(function(response) {
 				console.log("Response from filter server " + response.getBody()); 
-		    	cbIds.push(response.getBody()['id']);
+		    	//cbIds.push(response.getBody()['id']);
 		    	res.send(response.getBody());
 		   
 	},
@@ -55,7 +55,8 @@ router.route('/getresults').get(function(req, res){
 				flag = true;
 				var data = respArr[i];
 				respArr.splice(i,1);
-				cbIds.splice(cbIndex,1);
+				//TODO: confirm with shwetha.. 
+				//cbIds.splice(cbIndex,1);
 				res.send(data);
 
 			}
@@ -64,6 +65,24 @@ router.route('/getresults').get(function(req, res){
 			res.send({"id":req.query.id, "Message":"Pending"});
 		}
 	}
-})
+});
+
+router.route('/freqdata').post(function(req, res){
+	console.log("Called fredata ");
+	requestify.post('http://'+ip+':5000/getdata//freqdata', req.body)
+		.then(function(response) {
+				console.log("Response from filter server " + response.getBody()); 
+		    	cbIds.push(response.getBody()['id']);
+		    	res.send(response.getBody());
+		   
+	},
+	function(err){
+		if(err){
+			console.log('Error ' + err);
+			res.status(err.getCode()).send(err.getBody());
+		}
+	});
+});
+
 
 exports.router = router;

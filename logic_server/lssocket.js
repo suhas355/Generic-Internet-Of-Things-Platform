@@ -10,7 +10,7 @@ console.log('server listening on localhost:3550');
 
 io.sockets.on('connection', function(socket) {
   
-  console.log("----------recved connn-----------")
+  console.log("----------recved connn-----------");
   socket.on('Callback Response', function(data){
     console.log('message: ' + JSON.stringify(data));
     cb_resp.push(data);

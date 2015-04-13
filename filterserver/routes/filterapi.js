@@ -5,6 +5,8 @@ var filterapi = require('../models/dbschema');
 var express = require('express');
 var router = express.Router();
 var Validate = require('../processcb.js');
+
+//Get request for immediate data using sensor id.
 router.route('/').get(function(req, res) {
 	console.log(req.query);
   filterapi.find(
@@ -18,6 +20,7 @@ router.route('/').get(function(req, res) {
   });
 });
 
+//Callback using sensor id
 router.route('/registercallback/sensors').post(function(req, res) {
   console.log(req.body);
   
@@ -32,14 +35,7 @@ router.route('/registercallback/sensors').post(function(req, res) {
 
       callbackId++;
       var query = Validate.getQuery(req.body);
-      var ipAddr = req.headers["x-forwarded-for"]; 
-      if (ipAddr){ 
-        var list = ipAddr.split(","); 
-        ipAddr = list[list.length-1]; 
-      } 
-      else { 
-        ipAddr = req.connection.remoteAddress; 
-      }
+     
       queryMapping[callbackId] = {"query":query, "IP":ipAddr};
       if(req.body.tillWhen!=undefined){
         queryMapping[callbackId]["time"] = req.body.tillWhen;
@@ -51,12 +47,13 @@ router.route('/registercallback/sensors').post(function(req, res) {
     }
 });
 
+//Immediate data using latitude longitude
 router.route('/geolocation').post(function(req, res) {
   console.log(req.body.latitude);
   console.log(req.body.longitude);
   console.log("geolocation called")
   var type = req.body.type;
-  filterapi.find({geo: { $nearSphere: [req.body.longitude, req.body.latitude], $maxDistance:req.body.radius}}, function(err, docs){
+  filterapi.find( { geo: { $within: { $centerSphere: [ [ req.body.longitude,req.body.latitude ] , req.body.radius / 3963.192 ] } } }, function(err, docs){
 
   	if(err){
   		console.log(err);
@@ -66,7 +63,6 @@ router.route('/geolocation').post(function(req, res) {
   		for(i=0; i<len; i++){
   			sensorId.push(docs[i]['sensorId']);
   		}
-
   		var query = filterapi.find().where('sensorId').in(sensorId);
   		if(type!=undefined){
   			query = query.where('type').in(type);
@@ -84,7 +80,7 @@ router.route('/geolocation').post(function(req, res) {
 });
 
 
-
+//Immeiate data using text-based location
 router.route('/location').post(function(req, res) {
   console.log(req.body.location);
   if(req.body.location == undefined){
@@ -117,7 +113,7 @@ router.route('/location').post(function(req, res) {
     }
 });
 
-
+//Callback using lat,long
 router.route('/registercallback/geolocation').post(function(req, res) {
   
   console.log("register callback geolocation called")
@@ -163,6 +159,7 @@ router.route('/registercallback/geolocation').post(function(req, res) {
    
 });
 
+//Callback using text-location
 router.route('/registercallback/location').post(function(req, res) {
   
   if(req.body.location == undefined){
@@ -194,9 +191,32 @@ router.route('/registercallback/location').post(function(req, res) {
    }
 });
 
+//Callback to send data with certain interval
+router.route('/freqdata').post(function(req,res){
 
+    callbackId++;
+    var query = Validate.getQuery(req.body);
+    var freq = req.body.frequency;
+    var ipAddr = req.headers["x-forwarded-for"]; 
+    var endTime = req.body.tillWhen;
+    if (ipAddr){ 
+      var list = ipAddr.split(","); 
+      ipAddr = list[list.length-1]; 
+    } 
+    else { 
+      ipAddr = req.connection.remoteAddress; 
+    }
+    var ret = setInterval(Validate.freqDataCall, freq*1000, ipAddr, query, callbackId, endTime);
+
+    Validate.freqDataInterval[callbackId] = ret;
+    res.send({"Message":"Callback registered successfully","id":callbackId});
+
+});
+
+
+//Test API for adding sensor data..
 router.route('/sensordata').post(function(req, res) {
-	console.log(req.body);
+  console.log(req.body);
   var sensordata = new filterapi(req.body);
  
   filterapi.update({sensorId:req.body.sensorId},req.body,{upsert:true},function(err) {
