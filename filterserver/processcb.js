@@ -42,6 +42,10 @@ var getQuery = function(object){
 		console.log(conditionArr);
 	}
 
+	if(object['location']!=undefined){
+		query = query.where('location').equals(object['location']);
+	}
+
 	return query;
 }
 

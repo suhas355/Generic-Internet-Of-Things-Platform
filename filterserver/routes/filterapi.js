@@ -114,6 +114,81 @@ router.route('/location').post(function(req, res) {
     }
 });
 
+
+router.route('/registercallback/geolocation').post(function(req, res) {
+  
+  console.log("register callback geolocation called")
+  var query = Validate.getQuery(req.body);
+  var type = req.body.type;
+  callbackId++;
+  //Get all sensor ids from sensor info table
+  filterapi.find({geo: { $nearSphere: [req.body.longitude, req.body.latitude], $maxDistance:req.body.radius}}, function(err, docs){
+
+  	if(err){
+  		console.log(err);
+  	} else{
+  		var i=0, len=docs.length;
+  		var sensorId = [];
+  		for(i=0; i<len; i++){
+  			sensorId.push(docs[i]['sensorId']);
+  		}
+
+  		query = query.where('sensorId').in(sensorId);
+  		if(type!=undefined){
+  			query = query.where('type').in(type);
+  		}
+  		
+  		var ipAddr = req.headers["x-forwarded-for"]; 
+      	if (ipAddr){ 
+        	var list = ipAddr.split(","); 
+        	ipAddr = list[list.length-1]; 
+      	}	 
+     	else { 
+        	ipAddr = req.connection.remoteAddress; 
+      	}
+      	queryMapping[callbackId] = {"query":query, "IP":ipAddr};
+      	var ret = {};
+      	ret['message'] = "Callback registered";
+      	ret['id'] = callbackId;
+      	res.json(ret);
+
+ 	 }
+  });
+   
+});
+
+router.route('/registercallback/location').post(function(req, res) {
+  
+  if(req.body.location == undefined){
+    res.status(422).send({error:"Missing mandatory fields in JSON"});
+  }
+  else{
+
+  	  callbackId++;
+  	  var location = req.body.location;
+   	  var type = req.body.type;
+   	  var query = Validate.getQuery(req.body);
+   	  if(type!=undefined){
+   	  	query = query.where('type').in(type);
+   	  }
+
+   	 	var ipAddr = req.headers["x-forwarded-for"]; 
+	  	if (ipAddr){ 
+	    	var list = ipAddr.split(","); 
+	    	ipAddr = list[list.length-1]; 
+	  	}	 
+	 	else { 
+	    	ipAddr = req.connection.remoteAddress; 
+	  	}
+	  	queryMapping[callbackId] = {"query":query, "IP":ipAddr};
+	  	var ret = {};
+	  	ret['message'] = "Callback registered";
+	  	ret['id'] = callbackId;
+	  	res.json(ret);
+   }
+});
+
+
 router.route('/sensordata').post(function(req, res) {
 	console.log(req.body);
   var sensordata = new filterapi(req.body);
@@ -126,6 +201,8 @@ router.route('/sensordata').post(function(req, res) {
     res.send({ message: 'Data Added' });
   });
 });
+
+
 
 exports.router = router;
 exports.queryMapping = queryMapping;
