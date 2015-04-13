@@ -51,27 +51,32 @@ router.route('/registercallback/sensors').post(function(req, res) {
 router.route('/geolocation').post(function(req, res) {
   console.log(req.body.latitude);
   console.log(req.body.longitude);
-  if(req.body.radius == undefined){
-    console.log('radius is undefined ');
-    filterapi.find({
-        $and: [
-         {"geolocation.latitude" : req.body.latitude},
-         {"geolocation.longitude": req.body.longitude}
-        ]},
-        function(err, sensordata) {
-        if (err) {
-          return res.send(err);
-        }
-           res.json(sensordata);
-       
-       });
-     
-    }
-    else
-    {
-      console.log('radius is ' + req.body.radius);
-      res.json({"good" : "ok"});
-    }
+  console.log("geolocation called")
+  var type = req.body.type;
+  filterapi.find({geo: { $nearSphere: [req.body.longitude, req.body.latitude], $maxDistance:req.body.radius}}, function(err, docs){
+
+  	if(err){
+  		console.log(err);
+  	} else{
+  		var i=0, len=docs.length;
+  		var sensorId = [];
+  		for(i=0; i<len; i++){
+  			sensorId.push(docs[i]['sensorId']);
+  		}
+
+  		var query = filterapi.find().where('sensorId').in(sensorId);
+  		if(type!=undefined){
+  			query = query.where('type').in(type);
+  		}
+  		query.exec(function(err, sensordata){
+  			if(err){
+  				res.status(422).send({"Error":"Unable to process"});
+  			} else{
+  				res.send(sensordata);
+  			}
+  		});
+ 	 }
+  });
    
 });
 

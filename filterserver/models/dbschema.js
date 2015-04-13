@@ -6,7 +6,7 @@ var sensorDataSchema = new Schema({
   type: String,
   unit: String,
   location : String,
-  geolocation: [{latitude : Number, longitude : Number}],
+  geo: { type: [Number], index: '2d' },
   data: {type: Number, required: true},
   timestamp: { type : Date, default: Date.now }
 });

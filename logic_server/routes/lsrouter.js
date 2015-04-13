@@ -12,6 +12,7 @@ var cbIds = [];
 var requestify = require('requestify');
 router.route('/').post(function(req, res) {
 	
+	console.log("Recv request fr");
 	requestify.post('http://'+ip+':5000/getdata/registercallback/sensors', req.body)
 		.then(function(response) {
 				console.log("Response from filter server " + response.getBody()); 
@@ -59,8 +60,9 @@ router.route('/getresults').get(function(req, res){
 
 			}
 		}
-		if(!flag)
-			res.send('pending')
+		if(!flag){
+			res.send({"id":req.query.id, "Message":"Pending"});
+		}
 	}
 })
 
