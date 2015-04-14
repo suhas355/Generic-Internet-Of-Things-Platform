@@ -52,20 +52,16 @@ exports.readXMLFile = function() {
 		var mac = gatewayArr[i]['MacAddress']
 		gatewayList.push(mac);
 		exports.insertInitialVals('G'+mac);
-		jsonObj['macAddress'] = mac;
-		jsonObj['location'] = gatewayArr[i]['LocationName'];
-		var latjson = {};
-		latjson['latitude'] = latitude.toString();
-		var longjson = {};
-		longjson['longitude'] = longitude.toString();
-		jsonObj['geolocation'] = [ latjson , longjson];
+		jsonObj['macAddress'] = mac[0];
+		jsonObj['location'] = gatewayArr[i]['LocationName'][0];
+		jsonObj['geo'] = [ Number(latitude[0]) , Number(longitude[0])];
 
-
+		console.log(jsonObj);
 		var gatewayData = new devicedb.gatewayinfo(jsonObj);
 
 		gatewayData.save(function(err) {
 		    if (err) {
-		     	console.log('Error in gatewayData insertion');
+		     	console.log('Error in gatewayData insertion ' + err);
 		    }
 	  	});
 
@@ -77,20 +73,21 @@ exports.readXMLFile = function() {
 	  	var sensorJson = {};
 	  	for(var j=0; j<len; j++){
 	  		exports.insertInitialVals('S'+sensorArr[j]['ID']);
-	  		sensorJson['sensorId'] = sensorArr[j]['ID'];
-	  		sensorJson['gatewayId'] = mac;
-	  		sensorJson['deviceName'] = sensorArr[j]['SensorDevice'];
-	  		sensorJson['type'] = sensorArr[j]['Type'];
-	  		sensorJson['unit'] = sensorArr[j]['Unit'];
-	  		sensorJson['location'] = sensorArr[j]['SensorLocationName'];
-	  		var slat = {};
-	  		slat['latitude'] = sensorArr[j]['SensorGeoLocation'][0]['Latitude'].toString();
-	  		var slong = {};
-	  		slong['longitude'] = sensorArr[j]['SensorGeoLocation'][0]['Longitude'].toString();
-	  		sensorJson['geolocation'] = [ slat,slong];
-	  		sensorJson['protocol'] = sensorArr[j]['Protocol'];
-	  	//	sensorData['pullfrequency'] = ;
-
+	  		sensorJson['sensorId'] = sensorArr[j]['ID'][0];
+	  		sensorJson['gatewayId'] = mac[0];
+	  		sensorJson['deviceName'] = sensorArr[j]['SensorDevice'][0];
+	  		sensorJson['type'] = sensorArr[j]['Type'][0];
+	  		sensorJson['unit'] = sensorArr[j]['Unit'][0];
+	  		sensorJson['location'] = sensorArr[j]['SensorLocationName'][0];
+	  		var slat = sensorArr[j]['SensorGeoLocation'][0]['Latitude'];
+	  		var slong = sensorArr[j]['SensorGeoLocation'][0]['Longitude'];
+	  		var arr = [];
+	  		arr.push(Number(slong[0]));
+	  		arr.push(Number(slat[0]));
+	  		sensorJson['geo'] = arr;
+	  		sensorJson['altitude'] = sensorArr[j]['Altitude'][0];
+	  		sensorJson['protocol'] = sensorArr[j]['Protocol'][0];
+	  		console.log(JSON.stringify(sensorJson));
 	  		var sensorData = new devicedb.sensorinfo(sensorJson);
 
 			sensorData.save(function(err) {
@@ -127,7 +124,7 @@ exports.insertFSPingStatus = function(server,status) {
 			if(err){
 				console.log('Error in finding entry for ' + server);
 			}else{
-
+				console.log('server ' + server + ' status ' + status)
 				device['status'] = status;
 				device.save(function(err){
 					if(err){
@@ -150,6 +147,7 @@ exports.getSensorList = function(gatewayId, callback) {
 			}else{
 				callback(sinfo);
 			}
+			console.log(sinfo);
 	});
 }
 

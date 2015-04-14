@@ -9,8 +9,8 @@ var sensorInfoSchema = new Schema({
   type: String,
   unit: String,
   location : String,
-  geolocation: [{latitude : Number, longitude : Number}],
-  pullfrequency: Number,
+  geo: { type: [Number], index: '2d' },
+  altitude : Number,
   protocol: String
 });
 
@@ -19,8 +19,7 @@ var sensorinfo = mongoose.model('sensorinfo', sensorInfoSchema);
 var gatewayInfoSchema = new Schema({
 	macAddress : String,
 	location : String,
-  geolocation: [{latitude : Number, longitude : Number}]
-
+  geo: { type: [Number], index: '2d' },
 });
 
 var gatewayinfo = mongoose.model('gatewayinfo', gatewayInfoSchema);

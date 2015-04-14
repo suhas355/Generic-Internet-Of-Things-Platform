@@ -16,6 +16,7 @@
 				<Latitude>10.2</Latitude>
 				<Longitude>20.4</Longitude>
 			</SensorGeoLocation>
+			<Altitude>1</Altitude>
 			<SensorLocationName>PG1Labs</SensorLocationName>
 			<Protocol>Bluetooth</Protocol>
 		</Sensor>
@@ -28,6 +29,7 @@
 				<Latitude>10.2</Latitude>
 				<Longitude>20.4</Longitude>
 			</SensorGeoLocation>
+			<Altitude>2</Altitude>
 			<SensorLocationName>Pg1Labs</SensorLocationName>
 			<Protocol>Bluetooth</Protocol>
 		</Sensor>
@@ -48,6 +50,7 @@
 				<Latitude>10.2</Latitude>
 				<Longitude>20.4</Longitude>
 			</SensorGeoLocation>
+			<Altitude>1</Altitude>
 			<SensorLocationName>PG1Labs</SensorLocationName>
 			<Protocol>Bluetooth</Protocol>
 		</Sensor>
@@ -60,6 +63,7 @@
 				<Latitude>10.2</Latitude>
 				<Longitude>20.4</Longitude>
 			</SensorGeoLocation>
+			<Altitude>2</Altitude>
 			<SensorLocationName>Pg1Labs</SensorLocationName>
 			<Protocol>Bluetooth</Protocol>
 		</Sensor>
