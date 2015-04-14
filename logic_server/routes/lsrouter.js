@@ -115,6 +115,24 @@ router.route('/geolocation').post(function(req,res){
 
 });
 
+router.route('/getsensors/geolocation').post(function(req,res){
+
+	console.log("Recieved request for geolocation");
+	requestify.post('http://'+ip+':3000/sensor/getsensors/geolocation', req.body)
+		.then(function(response) {
+				console.log("Response from filter server " + response.getBody()); 
+		    	res.send(response.getBody());
+		   
+	},
+	function(err){
+		if(err){
+			console.log('Error ' + err);
+			res.status(err.getCode()).send(err.getBody());
+		}
+	});
+
+});
+
 router.route('/location').post(function(req,res){
 
 	console.log("Recieved request for location");
