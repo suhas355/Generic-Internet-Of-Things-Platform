@@ -33,7 +33,29 @@ router.route('/getsensors/geolocation').post(function(req,res){
     var lat = req.body.latitude;
     var longi = req.body.longitude;
     var radius = req.body.radius;
+    if(req.body.altitude == undefined){
+	    info.sensorinfo.find( { geo: { $within: { $centerSphere: [ [ req.body.longitude,req.body.latitude ] , req.body.radius / 3963.192 ] } } }, function(err, docs){
 
+	    	if(err){
+	    		console.log(err);
+	    	} else{
+	    		res.send(docs);
+	    	}
+
+	    });
+	} else{
+
+		info.sensorinfo.find( { geo: { $within: { $centerSphere: [ [ req.body.longitude,req.body.latitude ] , req.body.radius / 3963.192 ] } }, altitude:req.body.altitude }, function(err, docs){
+
+	    	if(err){
+	    		console.log(err);
+	    	} else{
+	    		res.send(docs);
+	    	}
+
+	    });
+
+	}
     
 });
 
