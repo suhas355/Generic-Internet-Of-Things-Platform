@@ -1,4 +1,7 @@
-var express = require('express');
+
+var express = require('express')
+  , stylus = require('stylus')
+  , nib = require('nib');
 var db = require("./dbconnection");
 db.readXMLFile();
 
@@ -16,12 +19,14 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var admin = require('./routes/admin');
+var gateway = require('./routes/gateway');
 
 var mongoose = require('mongoose');
 var dbinfo = require('./routes/sensorinfo'); 
 
 var app = express();
+/****************************UI part**************************/
 
 // view engine setup
 
@@ -32,8 +37,6 @@ app.get('/getSensors', function (req, res) {
 
 });
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -44,9 +47,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//app.engine('html', require('ejs').renderFile);
+//app.set('view engine', 'jade');
+  app.set('views', __dirname + '/views')
+app.set('view engine', 'jade') 
+
 app.use('/sensor',dbinfo);
 app.use('/', routes);
 app.use('/users', users);
+app.use('/admin', admin);
+app.use('/gateway', gateway);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AdminPortal</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+
+   
+  
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Home </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="http://localhost:3000/admin">Add New Sensor</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:3000/gateway">Add new Gateway</a>
+                    </li>
+                    <li>
+                        <a href="#">Add new Typehandler</a>
+                    </li>
+                    <li>
+                        <a href="#">Monitor</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+<div class="container">
+ <h1 class="text-muted">Add new Sensor</h1>
+    <div class="row">
+        <form role="form" onsubmit="sensorInsert()">
+            <div class="col-lg-6">
+                <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
+                <div class="form-group">
+                    <label for="sid">Sensor ID</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="sid" id="sid" placeholder="Enter sensor id" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="gid">Gateway ID</label>
+                    <div class="input-group">
+                        <select name="gateway" id="gid" class="form-control" >
+                             <option value="84:51:81:2C:8C:04">84:51:81:2C:8C:04</option>
+                             <option value="84:51:BF:2C:8C:03">84:51:BF:2C:8C:03</option>
+                        </select> <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                      
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="typeHandler">protocol Type</label>
+                    <div class="input-group">
+                        <select name="gateway" id="typeHandler" class="form-control" >
+                             <option value="Bluetooth">Bluetooth</option>
+                             <option value="Infra red">Infra red</option>
+                        </select> <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                      
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="type">Sensor Type</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="type" id="type" placeholder="Enter sensor type" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="unit">SI unit</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="unit" id="unit" placeholder="Enter sensor SI unit">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                  
+                </div>
+                 <div class="form-group">
+                    <label for="locationName">Location Name</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="locationName" id="locationName" placeholder="Enter sensor location" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lat">Location lattitude</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="lat" id="lat" placeholder="lattitude" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="long">Location longitude</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="long" id="long" placeholder="longitude" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Add new Device</button>
+                </div>
+              
+        </form>
+        
+    </div>
+</div>
+<hr>
+
+
+    <!-- Page Content -->
+    
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+    function sensorInsert() {
+         
+         var JSOBObj = {};
+         var sid=document.getElementById("sid").value;
+         var gid=document.getElementById("gid").value;
+         var protocol=document.getElementById("typeHandler").value;
+         var type=document.getElementById("type").value;
+         var unit=document.getElementById("unit").value;
+         var LocationName=document.getElementById("locationName").value;
+         var Latitude=document.getElementById("lat").value;
+         var Longitude=document.getElementById("long").value;
+         var devicename="deviceName";
+        
+     
+         var sensorJson = {};
+            sensorJson['sensorId'] = sid;
+            sensorJson['gatewayId'] = gid;
+            sensorJson['deviceName'] = 'DeviceName';
+            sensorJson['type'] = type;
+            sensorJson['unit'] = unit;
+            sensorJson['location'] = LocationName;
+            var arr=[];
+            arr.push(Number(Longitude));
+            arr.push(Number(Latitude));
+            sensorJson['geo'] = arr;
+            sensorJson['altitude'] = Number(3);
+            sensorJson['protocol'] = protocol;
+        //  sensorData['pullfrequency'] = ;
+        // var xmlJson = JSON.parse(xml);
+         alert(JSON.stringify(sensorJson));
+         $.post('http://localhost:3000/admin/insertSensor', sensorJson, function (data) {
+
+                    alert("hahahaah");
+                    window.location.href = "http://localhost:3000/admin";
+                 });
+    
+       
+    
+
+    }
+    </script>
+
+</body>
+
+</html>
