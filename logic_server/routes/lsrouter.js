@@ -12,11 +12,11 @@ var cbIds = [];
 var requestify = require('requestify');
 router.route('/').post(function(req, res) {
 	
-	console.log("Recv request fr");
+	console.log("Recieved request for register callback");
 	requestify.post('http://'+ip+':5000/getdata/registercallback/sensors', req.body)
 		.then(function(response) {
 				console.log("Response from filter server " + response.getBody()); 
-		    	//cbIds.push(response.getBody()['id']);
+		    	cbIds.push(response.getBody()['id']);
 		    	res.send(response.getBody());
 		   
 	},
@@ -56,8 +56,21 @@ router.route('/getresults').get(function(req, res){
 				var data = respArr[i];
 				respArr.splice(i,1);
 				//TODO: confirm with shwetha.. 
-				//cbIds.splice(cbIndex,1);
-				res.send(data);
+				if(req.query.id[0] == 'c'){
+					cbIds.splice(cbIndex,1);
+					data["Message"] = "Success";
+					res.send(data);
+					return;
+				} else{
+					if(data['Message']!=undefined){
+						cbIds.splice(cbIndex,1);
+			
+					}
+					console.log("Sent response "+ data);
+					res.send(data);
+					return;
+				}
+				
 
 			}
 		}
@@ -84,5 +97,40 @@ router.route('/freqdata').post(function(req, res){
 	});
 });
 
+router.route('/geolocation').post(function(req,res){
+
+	console.log("Recieved request for geolocation");
+	requestify.post('http://'+ip+':5000/getdata/geolocation', req.body)
+		.then(function(response) {
+				console.log("Response from filter server " + response.getBody()); 
+		    	res.send(response.getBody());
+		   
+	},
+	function(err){
+		if(err){
+			console.log('Error ' + err);
+			res.status(err.getCode()).send(err.getBody());
+		}
+	});
+
+});
+
+router.route('/location').post(function(req,res){
+
+	console.log("Recieved request for location");
+	requestify.post('http://'+ip+':5000/getdata/location', req.body)
+		.then(function(response) {
+				console.log("Response from filter server " + response.getBody()); 
+		    	res.send(response.getBody());
+		   
+	},
+	function(err){
+		if(err){
+			console.log('Error ' + err);
+			res.status(err.getCode()).send(err.getBody());
+		}
+	});
+
+});
 
 exports.router = router;

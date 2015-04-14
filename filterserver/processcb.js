@@ -3,6 +3,8 @@ var filterapi = require('./models/dbschema');
 var router = require('./routes/filterapi');
 var io = require('socket.io-client');
 var socketPort = "3550";
+var freqDataInterval = {};
+
 var getQuery = function(object){
 
 	var query = filterapi.find();
@@ -83,7 +85,7 @@ var executeQueries = function(){
 	}
 }
 
-var sendResponse = function(key, sensordata, ipaddress){
+var sendResponse = function(key, sensordata, ipaddress, endMessage){
 	console.log("sendResponse called "+ key + ": " + sensordata + "::" + ipaddress);
 	//1. Create socket
 	var queryMapping = router.queryMapping;
@@ -101,10 +103,40 @@ var sendResponse = function(key, sensordata, ipaddress){
 	console.log("URL:" + url);
 	var response = {};
 	response[key] = sensordata;
+	if(endMessage !=undefined){
+		response["Message"] = endMessage;
+	}
 	socket.emit('Callback Response', response);
 
 	//console.log(queryMapping.)
 }
 
+var freqData = function(ipAddr, query, callbackId, endTime){
+        
+        var currentTime = new Date()/1000;
+        if(endTime < currentTime){
+            console.log(endTime);
+            console.log(currentTime)
+            console.log("Deleting callback");
+            var endMessage = "Last data packet";
+            sendResponse(callbackId,{},ipAddr, endMessage);
+            clearInterval(freqDataInterval[callbackId]);
+        } 
+        else{
+	        query.exec(function(err, sensordata){
+	        if(err){
+	          res.status(422).send({"Error":"Unable to process"});
+	        } else{
+	          console.log("sending response to " + ipAddr);
+	          sendResponse(callbackId,sensordata,ipAddr);
+	        }
+	      });
+    	}
+
+ }
+
 exports.executeQueries = executeQueries;
 exports.getQuery = getQuery;
+exports.sendResponse = sendResponse;
+exports.freqDataCall = freqData;
+exports.freqDataInterval = freqDataInterval;

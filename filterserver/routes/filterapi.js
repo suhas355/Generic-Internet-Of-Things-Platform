@@ -33,16 +33,25 @@ router.route('/registercallback/sensors').post(function(req, res) {
 
   }else{
 
+  	  var ipAddr = req.headers["x-forwarded-for"]; 
+      	if (ipAddr){ 
+        	var list = ipAddr.split(","); 
+        	ipAddr = list[list.length-1]; 
+      	}	 
+     	else { 
+        	ipAddr = req.connection.remoteAddress; 
+      	}
+
       callbackId++;
       var query = Validate.getQuery(req.body);
      
-      queryMapping[callbackId] = {"query":query, "IP":ipAddr};
+      queryMapping['c'+callbackId] = {"query":query, "IP":ipAddr};
       if(req.body.tillWhen!=undefined){
-        queryMapping[callbackId]["time"] = req.body.tillWhen;
+        queryMapping['c'+callbackId]["time"] = req.body.tillWhen;
       }
       var ret = {};
       ret['message'] = "Callback registered";
-      ret['id'] = callbackId;
+      ret['id'] = 'c'+callbackId;
       res.json(ret);
     }
 });
@@ -80,7 +89,7 @@ router.route('/geolocation').post(function(req, res) {
 });
 
 
-//Immeiate data using text-based location
+//Immediate data using text-based location
 router.route('/location').post(function(req, res) {
   console.log(req.body.location);
   if(req.body.location == undefined){
@@ -100,7 +109,7 @@ router.route('/location').post(function(req, res) {
          } 
       else{
           
-         var query =  filterapi.find().where('type').in(req.body.type.split(","));
+         var query =  filterapi.find().where('type').in(req.body.type).where('location').equals(req.body.location);
          query.exec(function(err,sensordata){
 
               if(err) {
@@ -206,10 +215,10 @@ router.route('/freqdata').post(function(req,res){
     else { 
       ipAddr = req.connection.remoteAddress; 
     }
-    var ret = setInterval(Validate.freqDataCall, freq*1000, ipAddr, query, callbackId, endTime);
+    var ret = setInterval(Validate.freqDataCall, freq*1000, ipAddr, query, 'f'+callbackId, endTime);
 
-    Validate.freqDataInterval[callbackId] = ret;
-    res.send({"Message":"Callback registered successfully","id":callbackId});
+    Validate.freqDataInterval['f'+callbackId] = ret;
+    res.send({"Message":"Callback registered successfully","id":'f'+callbackId});
 
 });
 
