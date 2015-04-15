@@ -80,7 +80,12 @@ router.route('/geolocation').post(function(req, res) {
   			if(err){
   				res.status(422).send({"Error":"Unable to process"});
   			} else{
-  				res.send(sensordata);
+          if(sensordata.length == 0){
+            res.send({'Message':'No data found'});
+          }else{
+            console.log("Geo location----- "+JSON.stringify(sensordata));
+    				res.send(sensordata);
+          }
   			}
   		});
  	 }

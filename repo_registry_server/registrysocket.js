@@ -1,6 +1,13 @@
 var exports = module.exports = {};
 var PORT = 33333;
-var HOST = 'localhost';//'192.168.217.104';
+var hosts = [];
+hosts.push('192.168.217.106');
+hosts.push('192.168.217.109');
+hosts.push('192.168.217.104');
+
+exports.hosts = hosts;
+
+var HOST = '192.168.217.106';
 var mongoose = require('mongoose');
 var db = require("./dbconnection");
 
@@ -62,27 +69,34 @@ exports.pingFilterServer = function(){
 		db.insertFSPingStatus("filter","active");
 	}
 	properFilter = false;
-	client.send(message, 0, message.length, PORT, HOST, function(err, bytes) { 
+	client.send(message, 0, message.length, PORT, hosts[0], function(err, bytes) { 
 	if (err) 
 		throw err; 
-	console.log('Ping filter server ' + HOST +':'+ PORT); 
+	console.log('Ping filter server ' + hosts[0] +':'+ PORT); 
 	});
 }
 
 
 exports.pingGateway = function(){
+
+	for(var i=1;i<hosts.length;i++){
 	
-	if(gatewayStatus[db.gatewayList[0]] == 'inactive'){
-		db.insertFSPingStatus('G'+db.gatewayList[0], "inactive");
+		console.log('i : ' + i + 'host ' + hosts[i]);
+		if(gatewayStatus[db.gatewayList[i-1]] == 'inactive'){
+			db.insertFSPingStatus('G'+db.gatewayList[i-1], "inactive");
+		}
+			gatewayStatus[db.gatewayList[i-1]] = "inactive";
+			var ip = hosts[i];
+			client.send(message, 0, message.length, PORT, ip, function(err, bytes) { 
+				
+				console.log('Ping gateway ' + ip +':'+ PORT); 
+			
+			});
 	}
-		gatewayStatus[db.gatewayList[0]] = "inactive";
-		client.send(message, 0, message.length, PORT, "192.168.217.104", function(err, bytes) { 
-		console.log('Ping gateway ' + HOST +':'+ PORT); 
-	});
 }
 
 var SERVER_PORT = 30001;
-var SERVER_HOST = 'localhost';//'192.168.217.106';
+var SERVER_HOST = '192.168.217.106';
 
 var server_2 = dgram.createSocket('udp4');
 
@@ -93,6 +107,7 @@ server_2.on('listening',function(){
 
 //Get sensor list is called to this place
 server_2.on('message',function (message, remote){
+	console.log('-----------Request for sensor id---------')
 	console.log(remote.address +":"+remote.port +" - " + message);
 	var msg = db.getSensorList(message, function(data){
 		var msg = new Buffer(JSON.stringify(data));
