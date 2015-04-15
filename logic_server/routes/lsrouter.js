@@ -2,7 +2,7 @@ var exports = module.exports = {};
 
 var lssoc = require('../lssocket');
 
-var ip = "localhost";
+var ip = "192.168.217.106";
 
 var express = require('express');
 var router = express.Router();
@@ -100,6 +100,7 @@ router.route('/freqdata').post(function(req, res){
 router.route('/geolocation').post(function(req,res){
 
 	console.log("Recieved request for geolocation");
+	console.log(JSON.stringify(req.body));
 	requestify.post('http://'+ip+':5000/getdata/geolocation', req.body)
 		.then(function(response) {
 				console.log("Response from filter server " + response.getBody()); 
@@ -149,6 +150,22 @@ router.route('/location').post(function(req,res){
 		}
 	});
 
+});
+
+router.route('/sensorid').get(function(req,res){
+
+	requestify.get('http://'+ip+':5000/getdata?'+'sensorId='+req.query.sensorId)
+		.then(function(response){
+
+			console.log("Sending...." + JSON.stringify(response.getBody()))
+			res.send(response.getBody());
+		},
+			function(err){
+
+				if(err){
+					res.status(err.getCode()).send(err.getBody());
+				}
+			});
 });
 
 exports.router = router;
