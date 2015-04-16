@@ -26,6 +26,25 @@ router.route('/getsensors/location').post(function(req, res) {
     }
 });
 
+router.route('/getsensors/type').post(function(req, res) {
+  console.log("Received request query" + req.body.type);
+  if(req.body.type == undefined){
+    res.status(422).send({error:"Missing mandatory fields in JSON"});
+  }else{
+      
+       var query =  info.sensorinfo.find().where('type').in(req.body['type']);
+       query.exec(function(err, sensordata) {
+            if (err) {
+              return res.send(err);
+            }
+               res.json(sensordata);
+           
+           }); 
+            
+            
+    }
+});
+
 //get sensor id based on geo location
 
 router.route('/getsensors/geolocation').post(function(req,res){
