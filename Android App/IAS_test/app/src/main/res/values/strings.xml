@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">IAS_test</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_user__input">User_Input</string>
+    <string name="title_activity_input_by_sensor_id">Input_bySensorID</string>
+    <string name="title_activity_register__callback">Register_Callback</string>
+
+</resources>
