@@ -148,8 +148,9 @@ router.route('/getresults').get(function(req, res){
 						cbIds.splice(cbIndex,1);
 						resp['Message'] = data['Message'];
 			
-					}
-					
+					}else{
+						resp['Message'] = 'Success';
+					}					
 					var dataArr = data[req.query.id];
 					for(var i=0;i<dataArr.length;i++){
 						resp[dataArr[i]['type']] = dataArr[i]['data'];

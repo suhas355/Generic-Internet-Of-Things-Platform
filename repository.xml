@@ -56,7 +56,7 @@
 		</Sensor>
 		<Sensor>
 			<ID>m2</ID>
-			<Type>bpt</Type>
+			<Type>bp</Type>
 			<Unit>mmHg</Unit>
 			<SensorDevice>Health</SensorDevice>
 			<SensorGeoLocation>
@@ -69,8 +69,8 @@
 		</Sensor>
 		<Sensor>
 			<ID>m3</ID>
-			<Type>bpb</Type>
-			<Unit>mmHg</Unit>
+			<Type>pulse</Type>
+			<Unit>beats</Unit>
 			<SensorDevice>Health</SensorDevice>
 			<SensorGeoLocation>
 				<Latitude>10.2</Latitude>
