@@ -28,8 +28,13 @@ router.route('/getsensors').post(function(req, res){
 	requestify.post('http://'+ip+':3000/sensor/getsensors/type', req.body)
 		.then(function(response) {
 				console.log("Response from filter server " + response.getBody()); 
-		    	cbIds.push(response.getBody()['id']);
-		    	res.send(response.getBody());
+				var sensorArr = response.getBody();
+				var resMap = {}
+				for(var i=0;i<sensorArr.length;i++){
+					resMap[sensorArr[i]['type']] = sensorArr[i]['sensorId'];
+				}
+				console.log('response ' + JSON.stringify(resMap));
+		    	res.send(resMap);
 		   
 	},
 	function(err){
