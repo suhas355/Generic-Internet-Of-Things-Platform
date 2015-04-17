@@ -76,8 +76,12 @@ exports.findNextLocation = function(heatMap, res, source){
     
     		var output = {};
     		var locations = stdout.split("\n");
-    		output['location'] = locations[0];
-    		console.log('Next Location for Driver' + locations[0]);
+    		output['location'] = [];
+    		for(i=0; i<locations.length; i++){
+    			if(locations[i].length > 0)
+    				output['location'].push(locations[i]);
+    		}
+    		console.log('Next Location for Driver ' + locations[0]);
     		res.send(output);
     		console.log('stderr: ' + stderr);
     		if (error !== null) {
