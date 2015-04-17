@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Graph>
+<Route>
+	<Destination>Himagiri</Destination>
+	<Source>s1</Source>
+	<Path>
+		<Node>v0</Node>
+		<Edges>v1,v2,v3</Edges>
+	</Path>
+	<Path>
+		<Node>v2</Node>
+		<Edges>v4,v5</Edges>
+	</Path>
+	<Path>
+		<Node>v3</Node>
+		<Edges>v4,v5</Edges>
+	</Path>
+</Route>
+</Graph>

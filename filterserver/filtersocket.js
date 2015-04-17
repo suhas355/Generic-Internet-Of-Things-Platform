@@ -1,5 +1,5 @@
 var PORT = 33333;
-var HOST = 'localhost';//'192.168.217.106';
+var HOST = 'localhost';//'10.42.0.19';//'192.168.217.106';
 
 
 var dgram = require('dgram');
@@ -31,7 +31,7 @@ server.bind(PORT,HOST);
 
 var CPORT = 33334;
 var chosts = [];
-chosts.push('192.168.217.109');
+chosts.push('10.42.0.75');
 chosts.push('192.168.217.104');
 //var CHOST = '192.168.217.109';
 

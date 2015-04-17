@@ -135,16 +135,29 @@ router.route('/getresults').get(function(req, res){
 				//TODO: confirm with shwetha.. 
 				if(req.query.id[0] == 'c'){
 					cbIds.splice(cbIndex,1);
-					data["Message"] = "Success";
-					res.send(data);
+					var resp = {}
+					resp[data[req.query.id][0]['type']] = data[req.query.id][0]['data'];
+					resp['Message'] = 'Success';
+					//data["Message"] = "Success";
+					console.log('Sent response  for callback id' + res.query.id + ' value '+ resp);
+					res.send(resp);
 					return;
 				} else{
+					var resp = {};
 					if(data['Message']!=undefined){
 						cbIds.splice(cbIndex,1);
+						resp['Message'] = data['Message'];
 			
+					}else{
+						resp['Message'] = 'Success';
+					}					
+					var dataArr = data[req.query.id];
+					for(var i=0;i<dataArr.length;i++){
+						resp[dataArr[i]['type']] = dataArr[i]['data'];
+
 					}
-					console.log("Sent response "+ data);
-					res.send(data);
+					console.log("Sent response for freq data " + req.query.id+ ' value '+ resp);
+					res.send(resp);
 					return;
 				}
 				

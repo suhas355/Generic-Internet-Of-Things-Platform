@@ -227,6 +227,24 @@ router.route('/freqdata').post(function(req,res){
 
 });
 
+router.route('/getsensordata').post(function(req,res){
+
+    var query = filterapi.find();
+    query = query.where('sensorId').in(req.body['sensorId']);
+    query.exec(function(err, sensordata){
+        console
+        if(err){
+          res.status(422).send({"Error":"Unable to process"});
+        } else{
+          if(sensordata.length == 0){
+            res.send({'Message':'No data found'});
+          }else{
+            res.send(sensordata);
+          }
+        }
+    });
+
+});
 
 //Test API for adding sensor data..
 router.route('/sensordata').post(function(req, res) {

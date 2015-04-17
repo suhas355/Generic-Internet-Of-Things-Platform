@@ -15,6 +15,6 @@
     "serve-favicon": "~2.2.0",
     "mongoose": "~3.8.11",
     "socket.io-client":"latest",
-    "xml2js" : "latest"
+    "xml2js" : "latest",
   }
 }
