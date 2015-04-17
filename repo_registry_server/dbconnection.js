@@ -71,7 +71,7 @@ exports.readXMLFile = function() {
 	  	var slen = sensorArr.length;
 
 	  	var sensorJson = {};
-	  	for(var j=0; j<len; j++){
+	  	for(var j=0; j<slen; j++){
 	  		exports.insertInitialVals('S'+sensorArr[j]['ID']);
 	  		sensorJson['sensorId'] = sensorArr[j]['ID'][0];
 	  		sensorJson['gatewayId'] = mac[0];

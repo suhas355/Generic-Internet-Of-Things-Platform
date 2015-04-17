@@ -35,6 +35,53 @@
 		</Sensor>
 	</Gateway>
 	<Gateway>
+		<MacAddress>84:51:BF:2C:8C:05</MacAddress>
+		<GeoLocation>
+			<Latitude>23.45</Latitude>
+			<Longitude>43.23</Longitude>
+		</GeoLocation>
+		<LocationName>ambulance</LocationName>
+		<Sensor>
+			<ID>m1</ID>
+			<Type>ecg</Type>
+			<Unit>beats</Unit>
+			<SensorDevice>Health</SensorDevice>
+			<SensorGeoLocation>
+				<Latitude>10.2</Latitude>
+				<Longitude>20.4</Longitude>
+			</SensorGeoLocation>
+			<Altitude>1</Altitude>
+			<SensorLocationName>ambulance</SensorLocationName>
+			<Protocol>Bluetooth</Protocol>
+		</Sensor>
+		<Sensor>
+			<ID>m2</ID>
+			<Type>bpt</Type>
+			<Unit>mmHg</Unit>
+			<SensorDevice>Health</SensorDevice>
+			<SensorGeoLocation>
+				<Latitude>10.2</Latitude>
+				<Longitude>20.4</Longitude>
+			</SensorGeoLocation>
+			<Altitude>1</Altitude>
+			<SensorLocationName>ambulance</SensorLocationName>
+			<Protocol>Bluetooth</Protocol>
+		</Sensor>
+		<Sensor>
+			<ID>m3</ID>
+			<Type>bpb</Type>
+			<Unit>mmHg</Unit>
+			<SensorDevice>Health</SensorDevice>
+			<SensorGeoLocation>
+				<Latitude>10.2</Latitude>
+				<Longitude>20.4</Longitude>
+			</SensorGeoLocation>
+			<Altitude>2</Altitude>
+			<SensorLocationName>ambulance</SensorLocationName>
+			<Protocol>Bluetooth</Protocol>
+		</Sensor>
+	</Gateway>
+	<Gateway>
 		<MacAddress>84:51:BF:2C:8C:04</MacAddress>
 		<GeoLocation>
 			<Latitude>23.45</Latitude>

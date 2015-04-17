@@ -1,9 +1,9 @@
 var exports = module.exports = {};
 var PORT = 33333;
 var hosts = [];
-hosts.push('localhost');
+hosts.push('localhost');//'10.42.0.19');
 //hosts.push('192.168.217.106');
-hosts.push('192.168.217.109');
+hosts.push('10.42.0.75');
 hosts.push('192.168.217.104');
 
 exports.hosts = hosts;
@@ -97,7 +97,7 @@ exports.pingGateway = function(){
 }
 
 var SERVER_PORT = 30001;
-var SERVER_HOST = 'localhost';//'192.168.217.106';
+var SERVER_HOST = 'localhost';//'10.42.0.19';//'192.168.217.106';
 
 var server_2 = dgram.createSocket('udp4');
 
