@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#e8e8e8"
+    android:paddingLeft="5dp">
+
+    <!-- Seek Bar -->
+    <com.cengalabs.flatui.views.FlatTextView
+        flatui:fl_theme="@array/dark"
+        android:id="@+id/title_seekbar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="5dip"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:text="Himalaya: "
+        android:textSize="20dip" />
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:id="@+id/xy">
+
+        <com.cengalabs.flatui.views.FlatSeekBar
+            flatui:fl_theme="@array/grass"
+            android:id="@+id/seekbar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:max="200"
+            android:indeterminate="false" />
+
+    </LinearLayout>
+
+    <!-- Seek Bar -->
+    <com.cengalabs.flatui.views.FlatTextView
+        flatui:fl_theme="@array/dark"
+        android:id="@+id/title_seekbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="5dip"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:text="Nilgiri: "
+        android:textSize="20dip" />
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:id="@+id/layout">
+
+        <com.cengalabs.flatui.views.FlatSeekBar
+            flatui:fl_theme="@array/grass"
+            android:id="@+id/seekbar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:max="200" />
+
+    </LinearLayout>
+
+    <!-- Seek Bar -->
+    <com.cengalabs.flatui.views.FlatTextView
+        flatui:fl_theme="@array/dark"
+        android:id="@+id/title_seekbar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="5dip"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:textSize="20dip"
+        android:text="Vindya: " />
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+
+        <com.cengalabs.flatui.views.FlatSeekBar
+            flatui:fl_theme="@array/grass"
+            android:id="@+id/seekbar3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:max="200"
+            android:indeterminate="false" />
+
+    </LinearLayout>
+
+    <!-- Seek Bar -->
+
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="70dip"
+        android:paddingRight="20dip"
+        android:layout_marginTop="40dp"
+        android:gravity="center_vertical">
+
+        <com.cengalabs.flatui.views.FlatButton
+            flatui:fl_theme="@array/dark"
+            android:id="@+id/notify"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:text="Notify"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>
