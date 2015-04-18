@@ -1,5 +1,5 @@
 var PORT = 33333;
-var HOST = 'localhost';//'10.42.0.19';//'192.168.217.106';
+var HOST = '10.42.0.19';//'192.168.217.106';
 
 
 var dgram = require('dgram');
@@ -31,8 +31,8 @@ server.bind(PORT,HOST);
 
 var CPORT = 33334;
 var chosts = [];
+chosts.push('10.42.0.78');
 chosts.push('10.42.0.75');
-chosts.push('192.168.217.104');
 //var CHOST = '192.168.217.109';
 
 var mongoose = require('mongoose');
@@ -55,7 +55,9 @@ client.on('listening', function () {
 	
 client.on('message', function (message, remote) {
 
-	console.log("data reply from gateway"+remote.address + ':' + remote.port +' - ' + message); 
+	console.log("data reply from gateway"+remote.address + ':' + remote.port ); 
+	if(remote.address == '10.42.0.75')
+		console.log('Message ' + message);
 	//parse and dbstore
 
 	db.insertsensordata(message);

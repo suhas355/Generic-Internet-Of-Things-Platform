@@ -1,10 +1,10 @@
 var exports = module.exports = {};
 var PORT = 33333;
 var hosts = [];
-hosts.push('localhost');//'10.42.0.19');
+hosts.push('10.42.0.19');
 //hosts.push('192.168.217.106');
+hosts.push('10.42.0.78');
 hosts.push('10.42.0.75');
-hosts.push('192.168.217.104');
 
 exports.hosts = hosts;
 
@@ -30,7 +30,7 @@ client.on('listening', function () {
 	
 client.on('message', function (message, remote) {
 
-	console.log("Ping RESPONSE---" +remote.address + ':' + remote.port +' - ' + message); 
+	//console.log("Ping RESPONSE---" +remote.address + ':' + remote.port +' - ' + message); 
 
 	if( message == "ok"){
 		properFilter=true;
@@ -97,7 +97,7 @@ exports.pingGateway = function(){
 }
 
 var SERVER_PORT = 30001;
-var SERVER_HOST = 'localhost';//'10.42.0.19';//'192.168.217.106';
+var SERVER_HOST = '10.42.0.19';//'192.168.217.106';
 
 var server_2 = dgram.createSocket('udp4');
 

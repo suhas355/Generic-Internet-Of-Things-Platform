@@ -1,0 +1,82 @@
+<nodes>
+<node>
+	<area_no>0</area_no>	
+	<geolocation>30,200</geolocation>
+</node>
+<node>
+	<area_no>1</area_no>	
+	<geolocation>100,200</geolocation>
+</node>
+<node>
+	<area_no>2</area_no>	
+	<geolocation>100,350</geolocation>
+</node>
+<node>
+	<area_no>3</area_no>	
+	<geolocation>150,100</geolocation>
+</node>
+<node>
+	<area_no>4</area_no>	
+	<geolocation>200,300</geolocation>
+</node>
+<node>
+	<area_no>5</area_no>	
+	<geolocation>200,350</geolocation>
+</node>
+<node>
+	<area_no>6</area_no>	
+	<geolocation>250,50</geolocation>
+</node>
+<node>
+	<area_no>7</area_no>	
+	<geolocation>250,150</geolocation>
+</node>
+<node>
+	<area_no>8</area_no>	
+	<geolocation>250,250</geolocation>
+</node>
+<node>
+	<area_no>9</area_no>	
+	<geolocation>400,100</geolocation>
+</node>
+<node>
+	<area_no>10</area_no>	
+	<geolocation>400,200</geolocation>
+</node>
+<node>
+	<area_no>11</area_no>	
+	<geolocation>500,50</geolocation>
+</node>
+<node>
+	<area_no>12</area_no>	
+	<geolocation>500,150</geolocation>
+</node>
+<node>
+	<area_no>13</area_no>	
+	<geolocation>500,350</geolocation>
+</node>
+<node>
+	<area_no>14</area_no>	
+	<geolocation>600,100</geolocation>
+</node>
+<node>
+	<area_no>15</area_no>	
+	<geolocation>600,250</geolocation>
+</node>
+<node>
+	<area_no>16</area_no>	
+	<geolocation>750,100</geolocation>
+</node>
+<node>
+	<area_no>17</area_no>	
+	<geolocation>750,200</geolocation>
+</node>
+<node>
+	<area_no>18</area_no>	
+	<geolocation>750,350</geolocation>
+</node>
+<node>
+	<area_no>19</area_no>	
+	<geolocation>880,200</geolocation>
+</node>
+</nodes>

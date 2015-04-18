@@ -18,16 +18,17 @@ router.route('/').post(function(req,res){
 JSON structure
 
 {
+	'location' : 'amb-himagiri',
 	'type' : ['ecg','bp','highpulse']
 }
 
 */
 
 router.route('/getsensors').post(function(req, res){
-	console.log("Recieved request for get sensors");
-	requestify.post('http://'+ip+':3000/sensor/getsensors/type', req.body)
+	console.log("Recieved request for get sensors " + JSON.stringify(req.body));
+	requestify.post('http://'+ip+':3000/sensor/getsensors', req.body)
 		.then(function(response) {
-				console.log("Response from filter server " + response.getBody()); 
+				console.log("Response from registry" + response.getBody()); 
 				var sensorArr = response.getBody();
 				var resMap = {}
 				for(var i=0;i<sensorArr.length;i++){
@@ -120,26 +121,26 @@ router.route('/getresults').get(function(req, res){
 			break;
 		}
 	}
-	console.log(" cbIndex "+ cbIndex);
+	//console.log(" cbIndex "+ cbIndex);
 	if(cbIndex == -1){
-		res.status(400).send({error:"Requested callback id does not exists"});
+		res.status(400).send({'Message':'Failure',error:"Requested callback id does not exists"});
 	}else{
 
 		for(var i=0;i<respArr.length;i++){
 
-			console.log(respArr[i]);
+			//console.log(respArr[i]);
 			if(respArr[i][req.query.id] != undefined){
 				flag = true;
 				var data = respArr[i];
 				respArr.splice(i,1);
 				//TODO: confirm with shwetha.. 
 				if(req.query.id[0] == 'c'){
-					cbIds.splice(cbIndex,1);
+					//cbIds.splice(cbIndex,1);
 					var resp = {}
 					resp[data[req.query.id][0]['type']] = data[req.query.id][0]['data'];
 					resp['Message'] = 'Success';
 					//data["Message"] = "Success";
-					console.log('Sent response  for callback id' + res.query.id + ' value '+ resp);
+					console.log('Sent response  for callback id' + req.query.id + ' value '+ resp);
 					res.send(resp);
 					return;
 				} else{
@@ -156,7 +157,7 @@ router.route('/getresults').get(function(req, res){
 						resp[dataArr[i]['type']] = dataArr[i]['data'];
 
 					}
-					console.log("Sent response for freq data " + req.query.id+ ' value '+ resp);
+					//console.log("Sent response for freq data " + req.query.id+ ' value '+ resp);
 					res.send(resp);
 					return;
 				}

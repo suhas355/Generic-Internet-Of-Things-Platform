@@ -7,18 +7,16 @@ exports.insertsensordata = function(data) {
 
 	var jsonData = JSON.parse(data.toString());
 	var sensorArr = jsonData['data'];
-	console.log(sensorArr);
+	//console.log(sensorArr);
 	var len = sensorArr.length;
 	for(var i=0; i<len; i++){
-		console.log(sensorArr[i]['sensorId']);
+		//onsole.log(sensorArr[i]['sensorId']);
 		var sdata = new devicedb(sensorArr[i]);
 		var sid = sensorArr[i]['sensorId']
 		devicedb.update( {"sensorId" : sid},sensorArr[i] , { upsert : true },
 			function(err, result) {
 		   		if (err) {
 		      		console.log('data error');
-		    	}else{
-		 	    	console.log('data added'); 
 		    	}
 		
 		});

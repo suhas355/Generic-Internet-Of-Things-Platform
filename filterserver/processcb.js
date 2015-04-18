@@ -41,7 +41,7 @@ var getQuery = function(object){
 
 	if(conditionArr.length > 0){
 		query = query.or(conditionArr);
-		console.log(conditionArr);
+		//console.log(conditionArr);
 	}
 
 	if(object['location']!=undefined){
@@ -117,7 +117,7 @@ var freqData = function(ipAddr, query, callbackId, endTime){
         if(endTime < currentTime){
             console.log(endTime);
             console.log(currentTime)
-            console.log("Deleting callback");
+            console.log("---Deleting callback---");
             var endMessage = "Last data packet";
             sendResponse(callbackId,{},ipAddr, endMessage);
             clearInterval(freqDataInterval[callbackId]);

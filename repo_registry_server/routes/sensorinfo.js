@@ -26,13 +26,15 @@ router.route('/getsensors/location').post(function(req, res) {
     }
 });
 
-router.route('/getsensors/type').post(function(req, res) {
-  console.log("Received request query" + req.body.type);
+router.route('/getsensors').post(function(req, res) {
+  console.log("Received request query" + JSON.stringify(req.body));
   if(req.body.type == undefined){
     res.status(422).send({error:"Missing mandatory fields in JSON"});
   }else{
       
-       var query =  info.sensorinfo.find().where('type').in(req.body['type']);
+       var query =  info.sensorinfo.find()
+       .where('type').in(req.body['type'])
+       .where('location').equals(req.body.location);
        query.exec(function(err, sensordata) {
             if (err) {
               return res.send(err);

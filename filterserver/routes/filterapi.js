@@ -8,7 +8,7 @@ var Validate = require('../processcb.js');
 
 //Get request for immediate data using sensor id.
 router.route('/').get(function(req, res) {
-	console.log(req.query);
+	//console.log(req.query);
   filterapi.find(
   	{sensorId : req.query.sensorId},
   	function(err, sensordata) {
@@ -232,7 +232,6 @@ router.route('/getsensordata').post(function(req,res){
     var query = filterapi.find();
     query = query.where('sensorId').in(req.body['sensorId']);
     query.exec(function(err, sensordata){
-        console
         if(err){
           res.status(422).send({"Error":"Unable to process"});
         } else{
