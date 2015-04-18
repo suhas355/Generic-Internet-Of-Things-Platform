@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#e8e8e8"
+    android:paddingLeft="5dp"
+    android:id="@+id/xxy">
+    <LinearLayout
+        android:id="@+id/foo1"
+        android:orientation="vertical"
+        android:layout_marginTop="45dip"
+        android:layout_marginLeft="100dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/rd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left">
+
+            <com.cengalabs.flatui.views.FlatRadioButton
+                android:id="@+id/radio1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#0000"
+                android:text="BP"
+
+                android:layout_margin="5dip"
+                flatui:fl_size="20dip"
+                flatui:fl_dotMargin="1dp" />
+
+            <com.cengalabs.flatui.views.FlatRadioButton
+                android:id="@+id/radio2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="ECG"
+                android:background="#0000"
+                android:layout_margin="5dip"
+                flatui:fl_size="20dip"
+                flatui:fl_dotMargin="1dp" />
+            <com.cengalabs.flatui.views.FlatRadioButton
+                android:id="@+id/radio3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Pulse Rate"
+                android:background="#0000"
+                android:layout_margin="5dip"
+                flatui:fl_size="20dip"
+                flatui:fl_dotMargin="1dp" />
+
+        </RadioGroup>
+    </LinearLayout>
+
+    <com.cengalabs.flatui.views.FlatTextView
+        flatui:fl_theme="@array/dark"
+        android:id="@+id/title1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:layout_marginLeft="140dip"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:text="Maximum"
+        android:textSize="15dip" />
+    <com.cengalabs.flatui.views.FlatEditText
+        android:id="@+id/edittext_box5"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dip"
+        android:layout_marginTop="10dip"
+        android:maxLines="1"
+        android:inputType="number"
+        android:gravity="center_vertical"
+
+        android:includeFontPadding="true"
+        flatui:fl_fieldStyle="fl_box"
+        flatui:fl_theme="@array/sky" />
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:layout_gravity="right" />
+
+    <com.cengalabs.flatui.views.FlatTextView
+        flatui:fl_theme="@array/dark"
+        android:id="@+id/title3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="140dip"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:text="Minimum"
+        android:textSize="15dip" />
+
+    <com.cengalabs.flatui.views.FlatEditText
+        android:id="@+id/edittext_box6"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_marginLeft="70dip"
+        android:layout_marginTop="20dip"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+
+        android:includeFontPadding="true"
+        flatui:fl_fieldStyle="fl_box"
+        flatui:fl_theme="@array/sky" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="70dip"
+        android:paddingRight="20dip"
+        android:layout_marginTop="40dp"
+        android:gravity="center_vertical">
+
+        <com.cengalabs.flatui.views.FlatButton
+            flatui:fl_theme="@array/dark"
+            android:id="@+id/notify"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:text="Notify"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>
