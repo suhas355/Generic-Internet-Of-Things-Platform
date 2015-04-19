@@ -10,9 +10,6 @@ var https = require('https');
 var cbIds = [];
 var requestify = require('requestify');
 
-router.route('/').post(function(req,res){
-	res.send('Good');
-});
 
 /**
 JSON structure

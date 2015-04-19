@@ -2,7 +2,7 @@
 var express = require('express')
 var db = require("./dbconnection");
 db.readXMLFile();
-
+db.insertTypeHandlers();
 
 var repo_reg = require("./registrysocket.js");
 

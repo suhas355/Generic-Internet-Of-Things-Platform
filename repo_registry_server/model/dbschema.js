@@ -31,8 +31,20 @@ var pingstatusSchema = new Schema({
 
 var pingstatus = mongoose.model('pingstatus',pingstatusSchema);
 
+var typeInfoSchema = new Schema({
+    typename:  String,
+    unit: String,
+    protocol: String,
+    datacount: Number,
+    datatype: String 
+  
+  });
+
+var typeinfo = mongoose.model('typeinfo', typeInfoSchema);
+
 module.exports = {
   sensorinfo : sensorinfo,
   gatewayinfo : gatewayinfo,
-  pingstatus : pingstatus
+  pingstatus : pingstatus,
+  typeinfo   : typeinfo
 };

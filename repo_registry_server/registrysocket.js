@@ -1,6 +1,7 @@
 var exports = module.exports = {};
 var PORT = 33333;
 var hosts = [];
+//hosts.push('localhost')
 hosts.push('10.42.0.19');
 //hosts.push('192.168.217.106');
 hosts.push('10.42.0.78');
@@ -8,7 +9,6 @@ hosts.push('10.42.0.75');
 
 exports.hosts = hosts;
 
-var HOST = '192.168.217.106';
 var mongoose = require('mongoose');
 var db = require("./dbconnection");
 

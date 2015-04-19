@@ -115,6 +115,39 @@ exports.insertInitialVals = function(device) {
 	});
 }
 
+exports.insertTypeHandlers = function(){
+	var fs = require('fs');
+	var data = fs.readFileSync('./type.xml','utf8');
+	var parseString = require('xml2js').parseString;
+	var xml = data;
+	var obj;
+	parseString(xml, function (err, result) {
+		json = JSON.stringify(result);
+		obj = JSON.parse(json);
+		
+	});
+
+	var typeArr = obj["sensortypes"]['type'];
+	for(var i=0;i<typeArr.length;i++){
+		console.log(typeArr[i]);
+		var json = {}
+		json['typename'] = typeArr[i]['typename'][0];
+		json['unit'] = typeArr[i]['unit'][0];
+		json['protocol'] = typeArr[i]['protocol'][0];
+		json['datacount'] = typeArr[i]['datacount'][0];
+		json['datatype'] = typeArr[i]['datatype'][0];
+		var typedata = new devicedb.typeinfo(json);
+		
+		typedata.save(function(err){
+			if(err){
+				console.log('Error in putting type handler ');
+			}else{
+				console.log('insertTypeHandlers success')
+			}
+		});
+	}
+}
+
 exports.insertFSPingStatus = function(server,status) {
 	var jsonObj = {};
 

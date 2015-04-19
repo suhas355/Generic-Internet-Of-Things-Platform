@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sensortypes>
+	<type>
+		<typename>image</typename>
+		<unit>jpeg</unit>
+		<protocol>Bluetooth</protocol>
+		<datacount>1</datacount>
+		<datatype>array</datatype>
+	</type>
+	<type>
+		<typename>ecg</typename>
+		<unit>beats</unit>
+		<protocol>Bluetooth</protocol>
+		<datacount>1</datacount>
+		<datatype>number</datatype>
+	</type>
+	<type>
+		<typename>bp</typename>
+		<unit>mmHg</unit>
+		<protocol>Bluetooth</protocol>
+		<datacount>1</datacount>
+		<datatype>number</datatype>
+	</type>
+	<type>
+		<typename>pulse</typename>
+		<unit>beats</unit>
+		<protocol>Bluetooth</protocol>
+		<datacount>1</datacount>
+		<datatype>number</datatype>
+	</type>
+	<type>
+		<typename>sound</typename>
+		<unit>decibel</unit>
+		<protocol>Bluetooth</protocol>
+		<datacount>1</datacount>
+		<datatype>number</datatype>
+	</type>
+	<type>
+		<typename>traffic</typename>
+		<unit>heatmap</unit>
+		<protocol>Bluetooth</protocol>
+		<datacount>1</datacount>
+		<datatype>number</datatype>
+	</type>
+<sensortypes>
